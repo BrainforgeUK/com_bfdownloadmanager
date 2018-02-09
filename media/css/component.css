@@ -1,0 +1,50 @@
+
+
+div.download-button {
+  width:20em;
+  margin:1em;
+  display:inline-block;
+  background-color:#dddddd;
+  padding:0.2em;
+  text-align:center;
+  border:2px solid black;
+}
+
+div.download-button0 {
+  width:40em;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+}
+
+button.download-button {
+  width:20em;
+  max-width:100%;
+  margin:1em;
+}
+
+button.download-button0 {
+  width:40em;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  font-size:125%;
+}
+
+button.download-button p {
+  margin: 0.2em;
+}
+
+button.download-button p.download-button-details {
+  font-size:50%;
+}
+
+button.download-button:hover,
+button.download-button:focus {
+  text-decoration:underline;
+}
+
+button.download-button:hover p.download-button-details,
+button.download-button:focus p.download-button-details {
+  text-decoration:none;
+}

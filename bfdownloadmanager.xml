@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1" method="upgrade">
+	<name>com_bfdownloadmanager</name>
+	<author>Jonathan Brain</author>
+	<creationDate>February 2018</creationDate>
+	<copyright>Copyright (C) 2018 Jonathan Brain. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>brainforge.uk@btinternet.com</authorEmail>
+	<authorUrl>http://www.brainforge.co.uk</authorUrl>
+	<version>3.0.0</version>
+	<description>COM_BFDOWNLOADMANAGER_XML_DESCRIPTION</description>
+
+	<files folder="site">
+		<filename>bfdownloadmanager.php</filename>
+		<filename>controller.php</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB.com_bfdownloadmanager.ini</language>
+	</languages>
+
+	<media destination="com_bfdownloadmanager" folder="media">
+		<folder>css</folder>
+	</media>
+
+	<administration>
+		<menu img="../media/media/images/mime-icon-16/mov.png">Download Manager</menu>
+		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>bfdownloadmanager.php</filename>
+			<filename>controller.php</filename>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB.com_bfdownloadmanager.ini</language>
+			<language tag="en-GB">language/en-GB.com_bfdownloadmanager.sys.ini</language>
+		</languages>
+	</administration>
+
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+  
+  <updateservers>
+    <server type="extension" priority="1" name="com_bfdownloadmanager by BrainforgeUK">https://brainforge.co.uk/media/com_bfupdater/com_bfdownloadmanager.xml</server>
+  </updateservers>
+</extension>
