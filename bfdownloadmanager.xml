@@ -20,7 +20,7 @@
 		<folder>views</folder>
 	</files>
 	<languages folder="site">
-		<language tag="en-GB">language/en-GB.com_bfdownloadmanager.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_bfdownloadmanager.ini</language>
 	</languages>
 
 	<media destination="com_bfdownloadmanager" folder="media">
@@ -42,8 +42,8 @@
 			<folder>views</folder>
 		</files>
 		<languages folder="admin">
-			<language tag="en-GB">language/en-GB.com_bfdownloadmanager.ini</language>
-			<language tag="en-GB">language/en-GB.com_bfdownloadmanager.sys.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_bfdownloadmanager.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_bfdownloadmanager.sys.ini</language>
 		</languages>
 	</administration>
 
