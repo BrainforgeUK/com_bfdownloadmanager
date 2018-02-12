@@ -476,17 +476,17 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
       foreach($_FILES['jform']['name'] as $id=>$fileName) {
         switch ($id) {
           case 'downloadfile':
-            if (!empty($_FILES['jform']['tmp_name'][$id]) && @file_exists($_FILES['jform']['tmp_name'][$id])) {
-              $data[$id.'_name'] = $fileName;
-              $file = $_FILES['jform']['tmp_name'][$id];
-              $data[$id.'_size'] = filesize($file);
-              $data[$id] = base64_encode(file_get_contents($file));
+            if (!empty($_FILES['jform']['tmp_name']['downloadfile']) && @file_exists($_FILES['jform']['tmp_name']['downloadfile'])) {
+              $data['downloadfile_name'] = $fileName;
+              $file = $_FILES['jform']['tmp_name']['downloadfile'];
+              $data['downloadfile_size'] = filesize($file);
+              $data['downloadfile'] = base64_encode(file_get_contents($file));
             }
             else {
           		$table = $this->getTable();
-              $data[$id] = $table->getItemFieldValue($data['id'], $id);
+              $data['downloadfile'] = $table->getItemFieldValue($data['downloadfile'], 'downloadfile');
             }
-            break;
+            break 2;
           case 'com_fields':
             // Array of file fields
             // Use function onUserBeforeDataValidation($form, &$data) of field plugin event
@@ -497,6 +497,13 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
       }
     }
     
+    if (isset($data['downloadfile_name']) &&
+        !BfdownloadmanagerHelper::validateFilenameSuffix($data['downloadfile_name'], $form)) {
+      $data['downloadfile'] = null;
+      $data['downloadfile_size'] = null;
+      $data['downloadfile_name'] = null;
+    }
+        
 		// Filter and validate the form data.
 		return parent::validate($form, $data, $group);
 	}
@@ -540,7 +547,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 		// Check if New Category exists
 		if ($catid > 0)
 		{
-			$catid = CategoriesHelper::validateCategoryId($data['catid'], 'com_bfdownloadmanager');
+			$catid = CategoriesHelper::validateCategoryId($data['catid'], BfdownloadmanagerHelper::$extension);
 		}
 
 		// Save New Category
@@ -549,7 +556,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			$table = array();
 			$table['title'] = $data['catid'];
 			$table['parent_id'] = 1;
-			$table['extension'] = 'com_bfdownloadmanager';
+			$table['extension'] = BfdownloadmanagerHelper::$extension;
 			$table['language'] = $data['language'];
 			$table['published'] = 1;
 

@@ -7,6 +7,34 @@
 	>
 
 		<field
+			name="download_suffix_list"
+			type="textarea"
+			label="COM_BFDOWNLOADMANAGER_SUFFIX_LIST_LABEL"
+			description="COM_BFDOWNLOADMANAGER_SUFFIX_LIST_DESC"
+			size="40"
+      rows="1"
+		/>
+
+		<field
+			name="download_browserNav"
+			type="list"
+			label="COM_BFDOWNLOADMANAGER_BROWSERNAV_LABEL"
+			description="COM_BFDOWNLOADMANAGER_BROWSERNAV_DESC"
+			default="0"
+			>
+			<option value="0">COM_BFDOWNLOADMANAGER_BROWSERNAV_AUTOMATIC</option>
+			<option value="1">COM_BFDOWNLOADMANAGER_BROWSERNAV_DOWNLOAD</option>
+			<option value="2">COM_BFDOWNLOADMANAGER_BROWSERNAV_PARENT</option>
+			<option value="3">COM_BFDOWNLOADMANAGER_BROWSERNAV_NEW</option>
+		</field>
+
+		<field
+			name="spacer0"
+			type="spacer"
+			hr="true"
+		/>
+
+		<field
 			name="download_layout"
 			type="componentlayout"
 			label="JGLOBAL_FIELD_LAYOUT_LABEL"

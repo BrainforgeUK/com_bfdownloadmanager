@@ -72,14 +72,35 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 		<div class="row-fluid">
 			<div class="span9">
 				<fieldset class="adminform">
-					<?php echo $this->form->renderField('downloadfile'); ?>
+          <?php
+            if (empty($this->item->downloadfile_name)) {
+              $buttonmsg = null;
+            }
+            else if (!BfdownloadmanagerHelper::validateFilenameSuffix($this->item->downloadfile_name, $this->form)) {
+              $buttonmsg = jText::sprintf('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON', $this->item->downloadfile_name, $this->item->downloadfile_size);
+              $this->item->downloadfile = null;
+              $this->item->downloadfile_name = null;
+              $this->item->downloadfile_size = null;
+            }
+            else {
+              $buttonmsg = jText::sprintf('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON', $this->item->downloadfile_name, $this->item->downloadfile_size);
+            }
+            echo $this->form->renderField('downloadfile');
+          ?>
         	<input type="hidden" name="jform[downloadfile_name]" value="<?php echo $this->item->downloadfile_name;?>" />
         	<input type="hidden" name="jform[downloadfile_size]" value="<?php echo $this->item->downloadfile_size;?>" />
-          <a href="<?php echo dirname(JUri::base()); ?>/component/bfdownloadmanager/download?layout=fetch&id=<?php echo $this->item->id; ?>">
-            <span id="downloadfilelink" title="<?php echo jText::_('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON_DESC'); ?>">
-              <?php echo jText::sprintf('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON', $this->item->downloadfile_name, $this->item->downloadfile_size); ?>
-            </span>
-          </a>
+          <?php if (!empty($buttonmsg)) {
+                  if (empty($this->item->downloadfile_name)) {
+                    echo $buttonmsg;
+                  }
+                  else { ?>              
+              <a href="<?php echo dirname(JUri::base()); ?>/component/bfdownloadmanager/download?layout=fetch&id=<?php echo $this->item->id; ?>">
+                <span id="downloadfilelink" title="<?php echo jText::_('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON_DESC'); ?>">
+                <?php echo $buttonmsg; ?>
+                </span>
+              </a>
+          <?php   }
+                } ?>
           <hr />
           <?php if ($show_download_textarea) { ?>
 					 <?php echo $this->form->getInput('downloadtext'); ?>

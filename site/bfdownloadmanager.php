@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('BfdownloadmanagerHelper', JPATH_ADMINISTRATOR . '/components/com_bfdownloadmanager/helpers/bfdownloadmanager.php');
 JLoader::register('BfdownloadmanagerHelperRoute', JPATH_SITE . '/components/com_bfdownloadmanager/helpers/route.php');
 JLoader::register('BfdownloadmanagerHelperQuery', JPATH_SITE . '/components/com_bfdownloadmanager/helpers/query.php');
 JLoader::register('BfdownloadmanagerHelperAssociation', JPATH_SITE . '/components/com_bfdownloadmanager/helpers/association.php');
@@ -39,7 +40,7 @@ if ($checkCreateEdit)
 	}
 }
 
-JFactory::getDocument()->addStyleSheet('media/com_bfdownloadmanager/component.css');
+JFactory::getDocument()->addStyleSheet('media/com_bfdownloadmanager/css/component.css');
 $controller = JControllerLegacy::getInstance('Bfdownloadmanager');
 
 $controller->execute(JFactory::getApplication()->input->get('task'));

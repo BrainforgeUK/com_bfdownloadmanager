@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
+
 /**
  * Bfdownloadmanager component helper.
  *
@@ -31,35 +33,35 @@ class BfdownloadmanagerHelper extends JHelperContent
 	{
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BFDOWNLOADMANAGER_DOWNLOADS_TITLE'),
-			'index.php?option=com_bfdownloadmanager&view=downloads',
+			'index.php?option=' . self::$extension . '&view=downloads',
 			$vName == 'downloads'
 		);
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BFDOWNLOADMANAGER_SUBMENU_CATEGORIES'),
-			'index.php?option=com_categories&extension=com_bfdownloadmanager',
+			'index.php?option=com_categories&extension=' . self::$extension,
 			$vName == 'categories'
 		);
 
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BFDOWNLOADMANAGER_SUBMENU_FEATURED'),
-			'index.php?option=com_bfdownloadmanager&view=featured',
+			'index.php?option=' . self::$extension . '&view=featured',
 			$vName == 'featured'
 		);
 
-		if (JComponentHelper::isEnabled('com_fields') && JComponentHelper::getParams('com_bfdownloadmanager')->get('custom_fields_enable', '1'))
+		if (JComponentHelper::isEnabled('com_fields') && self::getParam('custom_fields_enable', '1'))
 		{
       $user = JFactory::getUser('core.fields');
-      if ($user->authorise('core.manage', 'com_bfdownloadmanager')) {
+      if ($user->authorise('core.manage', self::$extension)) {
   			JHtmlSidebar::addEntry(
   				JText::_('JGLOBAL_FIELDS'),
-  				'index.php?option=com_fields&context=com_bfdownloadmanager.download',
+  				'index.php?option=com_fields&context=' . self::$extension . '.download',
   				$vName == 'fields.fields'
   			);
       }
-      if ($user->authorise('core.field.groups', 'com_bfdownloadmanager')) {
+      if ($user->authorise('core.field.groups', self::$extension)) {
   			JHtmlSidebar::addEntry(
   				JText::_('JGLOBAL_FIELD_GROUPS'),
-  				'index.php?option=com_fields&view=groups&context=com_bfdownloadmanager.download',
+  				'index.php?option=com_fields&view=groups&context=' . self::$extension . '.download',
   				$vName == 'fields.groups'
   			);
       }
@@ -265,13 +267,58 @@ class BfdownloadmanagerHelper extends JHelperContent
 	 */
 	public static function getContexts()
 	{
-		JFactory::getLanguage()->load('com_bfdownloadmanager', JPATH_ADMINISTRATOR);
+		JFactory::getLanguage()->load(self::$extension, JPATH_ADMINISTRATOR);
 
 		$contexts = array(
-			'com_bfdownloadmanager.download'    => JText::_('COM_BFDOWNLOADMANAGER'),
-			'com_bfdownloadmanager.categories' => JText::_('JCATEGORY')
+			self::$extension . '.download'    => JText::_('COM_BFDOWNLOADMANAGER'),
+			self::$extension . '.categories' => JText::_('JCATEGORY')
 		);
 
 		return $contexts;
 	}
+
+	/**
+	 * Method to get the parameter value.
+	 *
+	 * @since   3.4
+	 */
+	public static function getParam($name, $default=null)
+	{
+    $params = ComponentHelper::getParams(self::$extension);
+    $value = $params->get($name, $default);
+
+    switch($name) {
+      case 'download_suffix_list':
+        $value = preg_replace('/^[^a-z0-9]+/', '', strtolower($value));
+        $value = preg_replace('/[^a-z0-9]+$/', '', $value);
+        if (!empty($value)) {
+          $value = preg_split('/[^a-z0-9]+/', $value);
+        }
+        break;
+    }
+    return $value;
+	}
+
+	/**
+	 */
+  public static function validateFilenameSuffix($filename, $form) {
+    if (!empty($filename)) {
+      $suffix_list = self::getParam('download_suffix_list');
+      if (!self::filenameInSuffixArray($filename, $suffix_list)) {
+        JFactory::getApplication()->enqueueMessage(jText::sprintf('COM_BFDOWNLOADMANAGER_SUFFIX_UNSUPPORTED', jText::_($form->getField('downloadfile')->getAttribute('label')), $data['downloadfile_name']), 'error');
+        return false;
+      }
+    }
+    return true;
+  }
+
+	/**
+	 */
+  public static function filenameInSuffixArray($filename, $suffices) {
+    if (empty($suffices)) {
+      return true;
+    }
+
+    return in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $suffices);
+  }
 }

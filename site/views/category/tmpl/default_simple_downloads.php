@@ -45,23 +45,32 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             $buttonText = 'COM_BFDOWNLOADMANAGER_DOWNLOAD_BTN_TEXT';
             break;
         }
-      }          
+      }
     ?>
-		<?php foreach ($this->items as $i => $download) { ?>
-        <?php
-        $ext = pathinfo($download->downloadfile_name, PATHINFO_EXTENSION);
-        switch($ext) {
-          case 'pdf':
-            $target = 'target=pdfdownload';
-            $inline = 0;
+		<?php foreach ($this->items as $i => $download) { 
+        if (!BfdownloadmanagerHelper::validateFilenameSuffix($download->downloadfile_name)) {
+          continue;
+        }
+
+        $browserNav = BfdownloadmanagerHelper::getParam('download_browserNav');
+        switch($browserNav) {
+          case 0:
+            $ext = strtolower(pathinfo($download->downloadfile_name, PATHINFO_EXTENSION));
+            switch($ext) {
+              case 'html';
+              case 'pdf';
+              case 'txt';
+                $browserNav = 3;
+                break;
+              default:
+                break;
+            }
             break;
           default:
-            $target = '';
-            $inline = 1;
             break;
         }
         ?>
-        <a <?php echo $target; ?> href="<?php echo JUri::base(); ?>component/bfdownloadmanager/download?layout=fetch&inline=<?php echo $inline; ?>&id=<?php echo $download->id; ?>"><button class="download-button download-button<?php echo $position; ?>">
+        <a <?php echo ($browserNav==3) ? ' target="_blank"' : ''; ?> href="<?php echo JUri::base(); ?>component/bfdownloadmanager/download?layout=fetch&id=<?php echo $download->id; ?>"><button class="download-button download-button<?php echo $position; ?>">
             <p class="download-button-text">
 						<?php echo jText::sprintf($buttonText, $this->escape($download->title, $download->downloadfile_name, $download->downloadfile_size)); ?>
             </p>

@@ -11,26 +11,48 @@ defined('_JEXEC') or die;
 
 ob_clean();
 
-$header = !empty($_REQUEST['inline']);
-$ext = pathinfo($this->item->downloadfile_name, PATHINFO_EXTENSION);
+if (!BfdownloadmanagerHelper::validateFilenameSuffix($this->item->downloadfile_name)) {
+  header("HTTP/1.0 404 Not Found");
+  exit(0);
+}
+
+$browserNav = BfdownloadmanagerHelper::getParam('download_browserNav');
+switch($browserNav) {
+  case 2:
+  case 3:
+    $header = false;
+    break;
+  case 0:
+  case 1:
+  default:
+    $header = true;
+    break;
+}
+$ext = strtolower(pathinfo($this->item->downloadfile_name, PATHINFO_EXTENSION));
 switch($ext) {
   case 'doc';
     header("Content-type: application/msword");
     break;
   case 'html';
-    $header = false;
     header("Content-type: text/html");
+    if (!isset($_REQUEST['inline'])) {
+      $header = ($browserNav == 1);
+    }
     break;
   case 'mp3';
     header("Content-type: audio/mpeg3");
     break;
   case 'pdf';
     header("Content-type: application/" . $ext);
-    $header = false;
+    if (!isset($_REQUEST['inline'])) {
+      $header = ($browserNav == 1);
+    }
     break;
   case 'txt';
-    $header = false;
     header("Content-type: text/plain");
+    if (!isset($_REQUEST['inline'])) {
+      $header = ($browserNav == 1);
+    }
     break;
   case 'zip';
     header("Content-type: application/" . $ext);
@@ -41,7 +63,7 @@ switch($ext) {
 }
 
 if ($header) {
-  header("Content-Disposition: attachment; filename=" . $this->item->downloadfile_name); 
+  header("Content-Disposition: attachment; filename=" . preg_replace('/[^a-zA-Z0-9]+/', '_', ($this->item->downloadfile_name))); 
   header("Content-length: " . $this->item->downloadfile_size);
   header("Expires: 0");
   header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");

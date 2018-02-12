@@ -50,7 +50,7 @@
     <field
       name="downloadfile_name"
       type="hidden"
-      label="Download File : "
+      label="COM_BFDOWNLOADMANAGER_DOWNLOADFILE_LABEL"
       description=""
       size="10"
       required="true"
@@ -59,16 +59,15 @@
     <field
       name="downloadfile_size"
       type="hidden"
-      label="Download File Size : "
+      label="COM_BFDOWNLOADMANAGER_DOWNLOADFILE_LABEL"
       description=""
       size="10"
-      required="true"
     />
 
-    <field
+    <field addfieldpath="/administrator/components/com_bfdownloadmanager/models/fields"
       name="downloadfile"
-      type="file"
-      label="Download File : "
+      type="dlmgrfile"
+      label="COM_BFDOWNLOADMANAGER_DOWNLOADFILE_LABEL"
       description=""
       size="10"
     />
