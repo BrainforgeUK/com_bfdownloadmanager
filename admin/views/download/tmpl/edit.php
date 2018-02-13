@@ -27,10 +27,8 @@ $this->ignore_fieldsets = array('jmetadata', 'item_associations');
 $params = clone $this->state->get('params');
 $params->merge(new Registry($this->item->attribs));
 
-$categories = JCategories::getInstance('Bfdownloadmanager');
-$category   = $categories->get($this->item->catid);
-$attr = new Registry(json_decode($category->params));
-$show_download_textarea = $attr->get('show_download_textarea');
+$show_download_textarea = BfdownloadmanagerHelper::getCategoryAttr($this->item->catid, 'show_download_textarea');
+$download_suffix_list = BfdownloadmanagerHelper::getCategoryAttr($this->item->catid, 'download_suffix_list');
 
 $app = JFactory::getApplication();
 $input = $app->input;
@@ -76,7 +74,7 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
             if (empty($this->item->downloadfile_name)) {
               $buttonmsg = null;
             }
-            else if (!BfdownloadmanagerHelper::validateFilenameSuffix($this->item->downloadfile_name, $this->form)) {
+            else if (!BfdownloadmanagerHelper::validateFilenameSuffix($this->item->downloadfile_name, $download_suffix_list, $this->form)) {
               $buttonmsg = jText::sprintf('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON', $this->item->downloadfile_name, $this->item->downloadfile_size);
               $this->item->downloadfile = null;
               $this->item->downloadfile_name = null;

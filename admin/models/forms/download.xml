@@ -346,8 +346,8 @@
   		<field 
   			name="show_textarea" 
 				type="list"
-  			label="COM_BFDOWNLOADMANAGER_SHOW_TEXTAREA"
-  			description="COM_BFDOWNLOADMANAGER_SHOW_TEXTAREA_DESC"
+  			label="COM_BFDOWNLOADMANAGER_SHOW_FULL_LABEL"
+  			description="COM_BFDOWNLOADMANAGER_SHOW_FULL_DESC"
 				class="chzn-color"
 				useglobal="true"
 				>

@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
-		<fieldset name="basic">
+  <fields name="params">
+  	<fieldset
+  		name="file_settings"
+  		label="COM_BFDOWNLOADMANAGER_FILE_SETTINGS"
+  		description="COM_BFDOWNLOADMANAGER_FILE_SETTINGS_DESC"
+  	>
+  
   		<field
+  			name="download_suffix_list"
+  			type="textarea"
+  			label="COM_BFDOWNLOADMANAGER_SUFFIX_LIST_LABEL"
+  			description="COM_BFDOWNLOADMANAGER_SUFFIX_LIST_DESC"
+  			size="40"
+        rows="1"
+  		/>
+  
+  		<field
+  			name="download_browserNav"
+  			type="list"
+  			label="COM_BFDOWNLOADMANAGER_BROWSERNAV_LABEL"
+  			description="COM_BFDOWNLOADMANAGER_BROWSERNAV_DESC"
+  			default="0"
+  			>
+  			<option value="0">COM_BFDOWNLOADMANAGER_BROWSERNAV_AUTOMATIC</option>
+  			<option value="1">COM_BFDOWNLOADMANAGER_BROWSERNAV_DOWNLOAD</option>
+  			<option value="2">COM_BFDOWNLOADMANAGER_BROWSERNAV_PARENT</option>
+  			<option value="3">COM_BFDOWNLOADMANAGER_BROWSERNAV_NEW</option>
+  		</field>
+  
+    	<field
+    		name="spacer1"
+    		type="spacer"
+    		hr="true"
+    	/>
+  
+  		<field 
   			name="show_download_textarea" 
   			type="radio"
   			label="COM_BFDOWNLOADMANAGER_SHOW_DOWNLOADTEXTAREA"
   			description="COM_BFDOWNLOADMANAGER_SHOW_DOWNLOADTEXTAREA_DESC"
   			class="btn-group btn-group-yesno"
-		        default="0"
+        default="0"
   			>
   			<option value="1">JSHOW</option>
   			<option value="0">JHIDE</option>
   		</field>
-		</fieldset>
-	</fields>
+  	</fieldset>
+ 	</fields>
 </form>

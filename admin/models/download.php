@@ -496,9 +496,10 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
         }          
       }
     }
-    
+
+    $suffix_list = BfdownloadmanagerHelper::getCategoryAttr($data['catid'], 'download_suffix_list');
     if (isset($data['downloadfile_name']) &&
-        !BfdownloadmanagerHelper::validateFilenameSuffix($data['downloadfile_name'], $form)) {
+        !BfdownloadmanagerHelper::validateFilenameSuffix($data['downloadfile_name'], $suffix_list)) {
       $data['downloadfile'] = null;
       $data['downloadfile_size'] = null;
       $data['downloadfile_name'] = null;

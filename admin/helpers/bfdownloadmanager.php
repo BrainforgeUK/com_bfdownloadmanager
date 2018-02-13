@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Registry\Registry;
 
 /**
  * Bfdownloadmanager component helper.
@@ -19,6 +20,8 @@ use Joomla\CMS\Component\ComponentHelper;
 class BfdownloadmanagerHelper extends JHelperContent
 {
 	public static $extension = 'com_bfdownloadmanager';
+  protected static $categories = null;
+  protected static $category = null;
 
 	/**
 	 * Configure the Linkbar.
@@ -285,27 +288,17 @@ class BfdownloadmanagerHelper extends JHelperContent
 	public static function getParam($name, $default=null)
 	{
     $params = ComponentHelper::getParams(self::$extension);
-    $value = $params->get($name, $default);
-
-    switch($name) {
-      case 'download_suffix_list':
-        $value = preg_replace('/^[^a-z0-9]+/', '', strtolower($value));
-        $value = preg_replace('/[^a-z0-9]+$/', '', $value);
-        if (!empty($value)) {
-          $value = preg_split('/[^a-z0-9]+/', $value);
-        }
-        break;
-    }
-    return $value;
+    return trim($params->get($name, $default));
 	}
 
 	/**
 	 */
-  public static function validateFilenameSuffix($filename, $form) {
+  public static function validateFilenameSuffix($filename, $suffix_list, $form=null) {
     if (!empty($filename)) {
-      $suffix_list = self::getParam('download_suffix_list');
       if (!self::filenameInSuffixArray($filename, $suffix_list)) {
-        JFactory::getApplication()->enqueueMessage(jText::sprintf('COM_BFDOWNLOADMANAGER_SUFFIX_UNSUPPORTED', jText::_($form->getField('downloadfile')->getAttribute('label')), $data['downloadfile_name']), 'error');
+        if (!empty($form)) {
+          JFactory::getApplication()->enqueueMessage(jText::sprintf('COM_BFDOWNLOADMANAGER_SUFFIX_UNSUPPORTED', jText::_($form->getField('downloadfile')->getAttribute('label')), $filename), 'error');
+        }
         return false;
       }
     }
@@ -314,11 +307,48 @@ class BfdownloadmanagerHelper extends JHelperContent
 
 	/**
 	 */
-  public static function filenameInSuffixArray($filename, $suffices) {
-    if (empty($suffices)) {
+  public static function suffixList2Array($suffix_list) {
+    $suffix_list = preg_replace('/^[^a-z0-9]+/', '', strtolower($suffix_list));
+    $suffix_list = preg_replace('/[^a-z0-9]+$/', '', $suffix_list);
+    if (!empty($suffix_list)) {
+      $suffix_list = preg_split('/[^a-z0-9]+/', $suffix_list);
+    }
+    return $suffix_list;
+  }
+
+	/**
+	 */
+  public static function filenameInSuffixArray($filename, $suffix_list) {
+    if (!is_array($suffix_list)) {
+      $suffix_list = self::suffixList2Array($suffix_list);
+    }
+    if (empty($suffix_list)) {
       return true;
     }
+    return in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $suffix_list);
+  }
 
-    return in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $suffices);
+	/**
+	 */
+	public static function getCategoryAttr($catid, $name) {
+    if (empty($catid)) {
+      return '';
+    }
+  
+    if (empty(self::$categories)) {
+      self::$categories = JCategories::getInstance('Bfdownloadmanager');
+      self::$category = array();
+    }
+    if (empty(self::$category[$catid])) {
+      $category = self::$categories->get($catid);
+      $category->attr = new Registry(json_decode($category->params));
+      self::$category[$catid] = $category;
+    }
+    
+    $value = trim(self::$category[$catid]->attr->get($name));
+    if ($value === null || $value === '') {
+      return self::getParam($name);
+    }
+    return trim(self::$category[$catid]->attr->get($name));
   }
 }
