@@ -47,26 +47,40 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         }
       }
     ?>
-		<?php foreach ($this->items as $i => $download) { 
-        if (!BfdownloadmanagerHelper::validateFilenameSuffix($download->downloadfile_name)) {
+		<?php
+      $suffix_lists = array();
+      foreach ($this->items as $i => $download) {
+        if (!isset($suffix_lists[$download->catid])) {
+          $suffix_lists[$download->catid] = BfdownloadmanagerHelper::getCategoryAttr($download->catid, 'download_suffix_list');
+        }
+        if ($suffix_lists[$download->catid] === false ||
+            !BfdownloadmanagerHelper::validateFilenameSuffix($download->downloadfile_name, $suffix_lists[$download->catid])) {
+          JFactory::getApplication()->enqueueMessage(jText::sprintf('COM_BFDOWNLOADMANAGER_ERROR_FILE_ERROR', $download->title), 'error');
+          $suffix_lists[$download->catid] = false;
           continue;
         }
 
-        $browserNav = BfdownloadmanagerHelper::getParam('download_browserNav');
+        $inline = true;
+        $browserNav = BfdownloadmanagerHelper::getCategoryAttr($download->catid, 'download_browserNav');
         switch($browserNav) {
-          case 0:
+          case 1:
+            break;
+          case 2:
+          case 3:
+            $inline = false;
+            break;
+          default:
             $ext = strtolower(pathinfo($download->downloadfile_name, PATHINFO_EXTENSION));
             switch($ext) {
               case 'html';
               case 'pdf';
               case 'txt';
+                $inline = false;
                 $browserNav = 3;
                 break;
               default:
                 break;
             }
-            break;
-          default:
             break;
         }
         ?>

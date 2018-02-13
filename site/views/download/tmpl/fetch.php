@@ -11,23 +11,34 @@ defined('_JEXEC') or die;
 
 ob_clean();
 
-if (!BfdownloadmanagerHelper::validateFilenameSuffix($this->item->downloadfile_name)) {
+$suffix_list = BfdownloadmanagerHelper::getCategoryAttr($this->item->catid, 'download_suffix_list');
+if (!BfdownloadmanagerHelper::validateFilenameSuffix($this->item->downloadfile_name, $suffix_list)) {
   header("HTTP/1.0 404 Not Found");
   exit(0);
 }
 
-$browserNav = BfdownloadmanagerHelper::getParam('download_browserNav');
+$browserNav = BfdownloadmanagerHelper::getCategoryAttr($download->catid, 'download_browserNav');
 switch($browserNav) {
   case 2:
   case 3:
     $header = false;
     break;
-  case 0:
   case 1:
   default:
     $header = true;
+    $ext = strtolower(pathinfo($download->downloadfile_name, PATHINFO_EXTENSION));
+    switch($ext) {
+      case 'html';
+      case 'pdf';
+      case 'txt';
+        $browserNav = 3;
+        break;
+      default:
+        break;
+    }
     break;
 }
+
 $ext = strtolower(pathinfo($this->item->downloadfile_name, PATHINFO_EXTENSION));
 switch($ext) {
   case 'doc';
