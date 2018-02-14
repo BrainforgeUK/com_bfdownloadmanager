@@ -3,14 +3,14 @@
 	<fieldset
 		name="file_settings"
 		label="COM_BFDOWNLOADMANAGER_FILE_SETTINGS"
-		description="COM_BFDOWNLOADMANAGER_FILE_SETTINGS_DESC"
+		description="COM_BFDOWNLOADMANAGER_FILE_CONFIG_SETTINGS_DESC"
 	>
 
 		<field
 			name="download_suffix_list"
 			type="textarea"
 			label="COM_BFDOWNLOADMANAGER_SUFFIX_LIST_LABEL"
-			description="COM_BFDOWNLOADMANAGER_CONFIG_SUFFIX_LIST_DESC"
+			description="COM_BFDOWNLOADMANAGER_SUFFIX_LIST_DESC"
 			size="40"
       rows="1"
 		/>
