@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>brainforge.uk@btinternet.com</authorEmail>
 	<authorUrl>http://www.brainforge.co.uk</authorUrl>
-	<version>3.0.0</version>
+	<version>3.7.1</version>
 	<description>COM_BFDOWNLOADMANAGER_XML_DESCRIPTION</description>
 
 	<files folder="site">
@@ -60,6 +60,8 @@
 	</uninstall>
   
   <updateservers>
-    <server type="extension" priority="1" name="com_bfdownloadmanager by BrainforgeUK">https://brainforge.co.uk/media/com_bfupdater/com_bfdownloadmanager.xml</server>
+    <server type="extension" priority="1" name="com_bfdownloadmanager by BrainforgeUK">
+			https://brainforge.co.uk/component/bfupdater?element=com_bfdownloadmanager.xml
+		</server>
   </updateservers>
 </extension>
