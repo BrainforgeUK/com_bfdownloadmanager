@@ -3,11 +3,11 @@
 	<name>com_bfdownloadmanager</name>
 	<author>Jonathan Brain</author>
 	<creationDate>February 2018</creationDate>
-	<copyright>Copyright (C) 2018 Jonathan Brain. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2018-2020 Jonathan Brain. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>brainforge.uk@btinternet.com</authorEmail>
 	<authorUrl>http://www.brainforge.co.uk</authorUrl>
-	<version>3.7.1</version>
+	<version>3.8.0</version>
 	<description>COM_BFDOWNLOADMANAGER_XML_DESCRIPTION</description>
 
 	<files folder="site">

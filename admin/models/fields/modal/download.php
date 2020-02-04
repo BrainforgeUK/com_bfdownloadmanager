@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_bfdownloadmanager
  *
- * @copyright   Copyright (C) 2018 Jonathan Brain. All rights reserved.
+ * @copyright   Copyright (C) 2018-2020 Jonathan Brain. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -111,7 +111,7 @@ class JFormFieldModal_Download extends JFormField
 			}
 		}
 
-		$title = empty($title) ? JText::_('COM_BFDOWNLOADMANAGER_SELECT_AN_DOWNLOAD') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+		$title = empty($title) ? JText::_('COM_BFDOWNLOADMANAGER_SELECT_A_DOWNLOAD') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
 		// The current download display field.
 		$html  = '<span class="input-append">';
@@ -253,7 +253,7 @@ class JFormFieldModal_Download extends JFormField
 		$class = $this->required ? ' class="required modal-value"' : '';
 
 		$html .= '<input type="hidden" id="' . $this->id . '_id" ' . $class . ' data-required="' . (int) $this->required . '" name="' . $this->name
-			. '" data-text="' . htmlspecialchars(JText::_('COM_BFDOWNLOADMANAGER_SELECT_AN_DOWNLOAD', true), ENT_COMPAT, 'UTF-8') . '" value="' . $value . '" />';
+			. '" data-text="' . htmlspecialchars(JText::_('COM_BFDOWNLOADMANAGER_SELECT_A_DOWNLOAD', true), ENT_COMPAT, 'UTF-8') . '" value="' . $value . '" />';
 
 		return $html;
 	}

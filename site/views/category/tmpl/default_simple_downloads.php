@@ -83,8 +83,9 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             }
             break;
         }
+        $href = JRoute::_(BfdownloadmanagerHelperRoute::getDownloadRoute($download->id, $download->catid, $download->language) . '&layout=fetch');
         ?>
-        <a <?php echo ($browserNav==3) ? ' target="_blank"' : ''; ?> href="<?php echo JUri::base(); ?>component/bfdownloadmanager/download?layout=fetch&id=<?php echo $download->id; ?>"><button class="download-button download-button<?php echo $position; ?>">
+        <a <?php echo ($browserNav==3) ? ' target="_blank"' : ''; ?> href="<?php echo $href; ?>"><button class="download-button download-button<?php echo $position; ?>">
             <p class="download-button-text">
 						<?php echo jText::sprintf($buttonText, $this->escape($download->title, $download->downloadfile_name, $download->downloadfile_size)); ?>
             </p>
