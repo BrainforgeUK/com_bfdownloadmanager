@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_bfdloadmanager
  *
- * @copyright   Copyright (C) 2018 Jonathan Brain. Inc. All rights reserved.
+ * @copyright   Copyright (C) 2018-2020 Jonathan Brain. Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -16,6 +16,7 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_bfdownloadmanager'))
 }
 
 JLoader::register('BfdownloadmanagerHelper', __DIR__ . '/helpers/bfdownloadmanager.php');
+JLoader::register('BfdownloadmanagerHelperFile', __DIR__ . '/helpers/file.php');
 
 $controller = JControllerLegacy::getInstance('Bfdownloadmanager');
 $controller->execute(JFactory::getApplication()->input->get('task'));

@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_bfdownloadmanager
  *
- * @copyright   Copyright (C) 2018 Jonathan Brain. All rights reserved.
+ * @copyright   Copyright (C) 2018-2020 Jonathan Brain. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -489,7 +489,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 						else
 						{
 							$table = $this->getTable();
-							$data['downloadfile'] = $table->getItemFieldValue($data['downloadfile'], 'downloadfile');
+							$data['downloadfile'] = $table->getItemFieldValue($data['id'], 'downloadfile');
 						}
 						break 2;
 					case 'com_fields':
@@ -651,6 +651,21 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			}
 		}
 
+		if (empty($data['downloadfile']))
+		{
+			$downloadfiledata = null;
+			if (empty($data['id']))
+			{
+				$data['downloadfile_name'] = '';
+			}
+		}
+		else
+		{
+			// If stored in database (legacy) move to filesystem
+			$downloadfiledata = $data['downloadfile'];
+			$data['downloadfile'] = '';
+		}
+
 		if (parent::save($data))
 		{
 			if (isset($data['featured']))
@@ -658,6 +673,14 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 				$this->featured($this->getState($this->getName() . '.id'), $data['featured']);
 			}
 
+			if (!empty($downloadfiledata))
+			{
+				if (!file_put_contents(BfdownloadmanagerHelperFile::getFilename($data['id'], $data['downloadfile_name']), $downloadfiledata))
+				{
+					$msg = JText::_('COM_BFDOWNLOADMANAGER_SAVE_NOWRITE');
+					JFactory::getApplication()->enqueueMessage($msg, 'error');
+				}
+			}
 			return true;
 		}
 
@@ -876,12 +899,26 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	 */
 	public function delete(&$pks)
 	{
+		$db = $this->getDbo();
+		$query = 'SELECT id, downloadfile_name FROM ' . $db->quoteName('#__bfdownloadmanager') .
+			' WHERE id IN (' . implode(',', $pks) . ") AND downloadfile_name > ''";
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
+
+		foreach($rows as $row)
+		{
+			$filename = BfdownloadmanagerHelperFile::getFilename($row->id, $row->downloadfile_name);
+			if (is_file($filename))
+			{
+				unlink($filename);
+			}
+		}
+
 		$return = parent::delete($pks);
 
 		if ($return)
 		{
 			// Now check to see if this downloads was featured if so delete it from the #__bfdownloadmanager_frontpage table
-			$db = $this->getDbo();
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__bfdownloadmanager_frontpage'))
 				->where('bfdownloadmanager_id IN (' . implode(',', $pks) . ')');

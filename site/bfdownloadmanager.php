@@ -3,13 +3,14 @@
  * @package     Joomla.Site
  * @subpackage  com_bfdownloadmanager
  *
- * @copyright   Copyright (C) 2018 Jonathan Brain. All rights reserved.
+ * @copyright   Copyright (C) 2018-2020 Jonathan Brain. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 JLoader::register('BfdownloadmanagerHelper', JPATH_ADMINISTRATOR . '/components/com_bfdownloadmanager/helpers/bfdownloadmanager.php');
+JLoader::register('BfdownloadmanagerHelperFile', JPATH_ADMINISTRATOR . '/components/com_bfdownloadmanager/helpers/file.php');
 JLoader::register('BfdownloadmanagerHelperRoute', JPATH_SITE . '/components/com_bfdownloadmanager/helpers/route.php');
 JLoader::register('BfdownloadmanagerHelperQuery', JPATH_SITE . '/components/com_bfdownloadmanager/helpers/query.php');
 JLoader::register('BfdownloadmanagerHelperAssociation', JPATH_SITE . '/components/com_bfdownloadmanager/helpers/association.php');

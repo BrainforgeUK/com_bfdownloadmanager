@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_bfdownloadmanager
  *
- * @copyright   Copyright (C) 2018 Jonathan Brain. All rights reserved.
+ * @copyright   Copyright (C) 2018-2020 Jonathan Brain. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -243,18 +243,28 @@ class BfdownloadmanagerModelDownload extends JModelItem
 			return $item;
 		}
 
-		$pk = (int)$item->id;
-		$db = $this->getDbo('a.downloadfile');
-		$query = $db->getQuery(true)
-			->select('a.downloadfile')
-			->from('#__bfdownloadmanager AS a')
-			->where('a.id = ' . $pk);
-		$db->setQuery($query);
-		$item->downloadfile = $db->loadResult();
-		if (empty($item->downloadfile))
+		$filename = BfdownloadmanagerHelperFile::getFilename($item->id, $item->downloadfile_name);
+		if (!is_file($filename))
 		{
-			return JError::raiseError(404, JText::_('COM_BFDOWNLOADMANAGER_ERROR_DOWNLOAD_NOT_FOUND'));
+			// Check if download stored database (legacy)
+			$pk = (int)$item->id;
+			$db = $this->getDbo();
+			$query = $db->getQuery(true)
+				->select('a.downloadfile')
+				->from('#__bfdownloadmanager AS a')
+				->where('a.id = ' . $pk);
+			$db->setQuery($query);
+			$item->downloadfile = $db->loadResult();
+			if (empty($item->downloadfile))
+			{
+				return JError::raiseError(404, JText::_('COM_BFDOWNLOADMANAGER_ERROR_DOWNLOAD_NOT_FOUND'));
+			}
 		}
+		else
+		{
+			$item->downloadfile = file_get_contents($filename);
+		}
+
 		$this->_item[$pk] = $item;
 		return $this->_item[$pk];
 	}
