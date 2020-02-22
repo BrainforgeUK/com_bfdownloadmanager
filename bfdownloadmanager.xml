@@ -25,6 +25,8 @@
 
     <media destination="com_bfdownloadmanager" folder="media">
         <folder>css</folder>
+        <folder>downloads</folder>
+        <folder>js</folder>
     </media>
 
     <administration>
