@@ -20,7 +20,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 	/**
 	 * Constructor for this legacy router
 	 *
-	 * @param   JComponentRouterView  $router  The router this rule belongs to
+	 * @param JComponentRouterView $router The router this rule belongs to
 	 *
 	 * @since       3.6
 	 * @deprecated  4.0
@@ -33,7 +33,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 	/**
 	 * Preprocess the route for the com_bfdownloadmanager component
 	 *
-	 * @param   array  &$query  An array of URL arguments
+	 * @param array  &$query An array of URL arguments
 	 *
 	 * @return  void
 	 *
@@ -47,8 +47,8 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 	/**
 	 * Build the route for the com_bfdownloadmanager component
 	 *
-	 * @param   array  &$query     An array of URL arguments
-	 * @param   array  &$segments  The URL arguments to use to assemble the subsequent URL.
+	 * @param array  &$query An array of URL arguments
+	 * @param array  &$segments The URL arguments to use to assemble the subsequent URL.
 	 *
 	 * @return  void
 	 *
@@ -94,7 +94,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 		if ($menuItem !== null
 			&& $menuItem->query['view'] == $query['view']
 			&& isset($menuItem->query['id'], $query['id'])
-			&& $menuItem->query['id'] == (int) $query['id'])
+			&& $menuItem->query['id'] == (int)$query['id'])
 		{
 			unset($query['view']);
 
@@ -135,7 +135,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 						$dbQuery = $db->getQuery(true)
 							->select('alias')
 							->from('#__bfdownloadmanager')
-							->where('id=' . (int) $query['id']);
+							->where('id=' . (int)$query['id']);
 						$db->setQuery($dbQuery);
 						$alias = $db->loadResult();
 						$query['id'] = $query['id'] . ':' . $alias;
@@ -184,7 +184,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 
 			foreach ($path as $id)
 			{
-				if ((int) $id == (int) $mCatid)
+				if ((int)$id == (int)$mCatid)
 				{
 					break;
 				}
@@ -198,7 +198,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 
 			if (!$advanced && count($array))
 			{
-				$array[0] = (int) $catid . ':' . $array[0];
+				$array[0] = (int)$catid . ':' . $array[0];
 			}
 
 			$segments = array_merge($segments, $array);
@@ -299,8 +299,8 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 	/**
 	 * Parse the segments of a URL.
 	 *
-	 * @param   array  &$segments  The segments of the URL to parse.
-	 * @param   array  &$vars      The URL attributes to be used by the application.
+	 * @param array  &$segments The segments of the URL to parse.
+	 * @param array  &$vars The URL attributes to be used by the application.
 	 *
 	 * @return  void
 	 *
@@ -340,16 +340,16 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 		// Manage the archive view
 		if ($item->query['view'] === 'archive')
 		{
-			$vars['view']  = 'archive';
+			$vars['view'] = 'archive';
 
 			if ($count >= 2)
 			{
-				$vars['year']  = $segments[$count - 2];
+				$vars['year'] = $segments[$count - 2];
 				$vars['month'] = $segments[$count - 1];
 			}
 			else
 			{
-				$vars['year']  = $segments[$count - 1];
+				$vars['year'] = $segments[$count - 1];
 				$vars['month'] = null;
 			}
 
@@ -367,7 +367,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 			if (strpos($segments[0], ':') === false)
 			{
 				$vars['view'] = 'download';
-				$vars['id'] = (int) $segments[0];
+				$vars['id'] = (int)$segments[0];
 
 				return;
 			}
@@ -389,7 +389,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 				$query = $db->getQuery(true)
 					->select($db->quoteName(array('alias', 'catid')))
 					->from($db->quoteName('#__bfdownloadmanager'))
-					->where($db->quoteName('id') . ' = ' . (int) $id);
+					->where($db->quoteName('id') . ' = ' . (int)$id);
 				$db->setQuery($query);
 				$download = $db->loadObject();
 
@@ -398,8 +398,8 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 					if ($download->alias == $alias)
 					{
 						$vars['view'] = 'download';
-						$vars['catid'] = (int) $download->catid;
-						$vars['id'] = (int) $id;
+						$vars['catid'] = (int)$download->catid;
+						$vars['id'] = (int)$id;
 
 						return;
 					}
@@ -414,9 +414,9 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 		 */
 		if ((!$advanced))
 		{
-			$cat_id = (int) $segments[0];
+			$cat_id = (int)$segments[0];
 
-			$download_id = (int) $segments[$count - 1];
+			$download_id = (int)$segments[$count - 1];
 
 			if ($download_id > 0)
 			{
@@ -474,7 +474,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 					$query = $db->getQuery(true)
 						->select($db->quoteName('id'))
 						->from('#__bfdownloadmanager')
-						->where($db->quoteName('catid') . ' = ' . (int) $vars['catid'])
+						->where($db->quoteName('catid') . ' = ' . (int)$vars['catid'])
 						->where($db->quoteName('alias') . ' = ' . $db->quote($segment));
 					$db->setQuery($query);
 					$cid = $db->loadResult();
@@ -484,7 +484,7 @@ class BfdownloadmanagerRouterRulesLegacy implements JComponentRouterRulesInterfa
 					$cid = $segment;
 				}
 
-				$vars['id']   = $cid;
+				$vars['id'] = $cid;
 				$vars['view'] = 'download';
 			}
 

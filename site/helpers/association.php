@@ -23,8 +23,8 @@ abstract class BfdownloadmanagerHelperAssociation extends CategoryHelperAssociat
 	/**
 	 * Method to get the associations for a given item
 	 *
-	 * @param   integer  $id    Id of the item
-	 * @param   string   $view  Name of the view
+	 * @param integer $id Id of the item
+	 * @param string $view Name of the view
 	 *
 	 * @return  array   Array of associations for the item
 	 *
@@ -33,9 +33,9 @@ abstract class BfdownloadmanagerHelperAssociation extends CategoryHelperAssociat
 	public static function getAssociations($id = 0, $view = null)
 	{
 		$jinput = JFactory::getApplication()->input;
-		$view   = $view === null ? $jinput->get('view') : $view;
-		$id     = empty($id) ? $jinput->getInt('id') : $id;
-		$user   = JFactory::getUser();
+		$view = $view === null ? $jinput->get('view') : $view;
+		$id = empty($id) ? $jinput->getInt('id') : $id;
+		$user = JFactory::getUser();
 		$groups = implode(',', $user->getAuthorisedViewLevels());
 
 		if ($view === 'download')
@@ -50,22 +50,22 @@ abstract class BfdownloadmanagerHelperAssociation extends CategoryHelperAssociat
 				{
 					if ($item->language != JFactory::getLanguage()->getTag())
 					{
-						$arrId   = explode(':', $item->id);
+						$arrId = explode(':', $item->id);
 						$assocId = $arrId[0];
 
-						$db    = JFactory::getDbo();
+						$db = JFactory::getDbo();
 						$query = $db->getQuery(true)
 							->select($db->qn('state'))
 							->from($db->qn('#__bfdownloadmanager'))
-							->where($db->qn('id') . ' = ' . (int) ($assocId))
+							->where($db->qn('id') . ' = ' . (int)($assocId))
 							->where('access IN (' . $groups . ')');
 						$db->setQuery($query);
 
-						$result = (int) $db->loadResult();
+						$result = (int)$db->loadResult();
 
 						if ($result > 0)
 						{
-							$return[$tag] = BfdownloadmanagerHelperRoute::getDownloadRoute($item->id, (int) $item->catid, $item->language);
+							$return[$tag] = BfdownloadmanagerHelperRoute::getDownloadRoute($item->id, (int)$item->catid, $item->language);
 						}
 					}
 				}
@@ -85,7 +85,7 @@ abstract class BfdownloadmanagerHelperAssociation extends CategoryHelperAssociat
 	/**
 	 * Method to display in frontend the associations for a given download
 	 *
-	 * @param   integer  $id  Id of the download
+	 * @param integer $id Id of the download
 	 *
 	 * @return  array   An array containing the association URL and the related language object
 	 *
@@ -97,7 +97,7 @@ abstract class BfdownloadmanagerHelperAssociation extends CategoryHelperAssociat
 
 		if ($associations = self::getAssociations($id, 'download'))
 		{
-			$levels    = JFactory::getUser()->getAuthorisedViewLevels();
+			$levels = JFactory::getUser()->getAuthorisedViewLevels();
 			$languages = JLanguageHelper::getLanguages();
 
 			foreach ($languages as $language)

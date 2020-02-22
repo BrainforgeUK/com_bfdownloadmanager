@@ -23,7 +23,7 @@ class JTableBfdownloadmanager extends JTable
 	/**
 	 * Constructor
 	 *
-	 * @param   JDatabaseDriver  &$db  Database connector object
+	 * @param JDatabaseDriver  &$db Database connector object
 	 *
 	 * @since   1.5
 	 */
@@ -53,7 +53,7 @@ class JTableBfdownloadmanager extends JTable
 	{
 		$k = $this->_tbl_key;
 
-		return 'com_bfdownloadmanager.download.' . (int) $this->$k;
+		return 'com_bfdownloadmanager.download.' . (int)$this->$k;
 	}
 
 	/**
@@ -72,8 +72,8 @@ class JTableBfdownloadmanager extends JTable
 	/**
 	 * Method to get the parent asset id for the record
 	 *
-	 * @param   Table    $table  A Table object (optional) for the asset parent
-	 * @param   integer  $id     The id (optional) of the bfdownloadmanager.
+	 * @param Table $table A Table object (optional) for the asset parent
+	 * @param integer $id The id (optional) of the bfdownloadmanager.
 	 *
 	 * @return  integer
 	 *
@@ -91,14 +91,14 @@ class JTableBfdownloadmanager extends JTable
 			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName('asset_id'))
 				->from($this->_db->quoteName('#__categories'))
-				->where($this->_db->quoteName('id') . ' = ' . (int) $this->catid);
+				->where($this->_db->quoteName('id') . ' = ' . (int)$this->catid);
 
 			// Get the asset id from the database.
 			$this->_db->setQuery($query);
 
 			if ($result = $this->_db->loadResult())
 			{
-				$assetId = (int) $result;
+				$assetId = (int)$result;
 			}
 		}
 
@@ -115,7 +115,8 @@ class JTableBfdownloadmanager extends JTable
 
 	/**
 	 */
-  public function getItemFieldValue($id, $field) {
+	public function getItemFieldValue($id, $field)
+	{
 		$query = $this->_db->getQuery(true)
 			->select($this->_db->quoteName($field))
 			->from($this->_tbl)
@@ -124,13 +125,13 @@ class JTableBfdownloadmanager extends JTable
 		$this->_db->setQuery($query);
 
 		return $this->_db->loadResult();
-  }
+	}
 
 	/**
 	 * Overloaded bind function
 	 *
-	 * @param   array  $array   Named array
-	 * @param   mixed  $ignore  An optional array or space separated list of properties
+	 * @param array $array Named array
+	 * @param mixed $ignore An optional array or space separated list of properties
 	 *                          to ignore while binding.
 	 *
 	 * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
@@ -161,13 +162,13 @@ class JTableBfdownloadmanager extends JTable
 		if (isset($array['attribs']) && is_array($array['attribs']))
 		{
 			$registry = new Registry($array['attribs']);
-			$array['attribs'] = (string) $registry;
+			$array['attribs'] = (string)$registry;
 		}
 
 		if (isset($array['metadata']) && is_array($array['metadata']))
 		{
 			$registry = new Registry($array['metadata']);
-			$array['metadata'] = (string) $registry;
+			$array['metadata'] = (string)$registry;
 		}
 
 		// Bind the rules.
@@ -291,7 +292,7 @@ class JTableBfdownloadmanager extends JTable
 	/**
 	 * Gets the default asset values for a component.
 	 *
-	 * @param   string  $component  The component asset name to search for
+	 * @param string $component The component asset name to search for
 	 *
 	 * @return  Rules  The Rules object for the asset
 	 *
@@ -307,7 +308,7 @@ class JTableBfdownloadmanager extends JTable
 			->from($db->quoteName('#__assets'))
 			->where($db->quoteName('name') . ' = ' . $db->quote($component));
 		$db->setQuery($query);
-		$assetId = (int) $db->loadResult();
+		$assetId = (int)$db->loadResult();
 
 		return Access::getAssetRules($assetId);
 	}
@@ -318,7 +319,7 @@ class JTableBfdownloadmanager extends JTable
 	 * If a primary key value is set the row with that primary key value will be updated with the instance property values.
 	 * If no primary key value is set a new row will be inserted into the database with the properties from the Table instance.
 	 *
-	 * @param   boolean  $updateNulls  True to update fields even if they are null.
+	 * @param boolean $updateNulls True to update fields even if they are null.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -368,10 +369,10 @@ class JTableBfdownloadmanager extends JTable
 			 * Asset Tracking
 			 */
 			$parentId = $this->_getAssetParentId();
-			$name     = $this->_getAssetName();
-			$title    = $this->_getAssetTitle();
+			$name = $this->_getAssetName();
+			$title = $this->_getAssetTitle();
 
-			/** @var  \JTableAsset  $asset */
+			/** @var  \JTableAsset $asset */
 			$asset = self::getInstance('Asset', 'JTable', array('dbo' => $this->getDbo()));
 			$asset->loadByName($name);
 
@@ -397,12 +398,12 @@ class JTableBfdownloadmanager extends JTable
 
 				// Prepare the asset to be stored.
 				$asset->parent_id = $parentId;
-				$asset->name      = $name;
-				$asset->title     = $title;
+				$asset->name = $name;
+				$asset->title = $title;
 
 				if ($this->_rules instanceof \JAccessRules)
 				{
-					$asset->rules = (string) $this->_rules;
+					$asset->rules = (string)$this->_rules;
 				}
 
 				if (!$asset->check() || !$asset->store($updateNulls))
@@ -417,11 +418,11 @@ class JTableBfdownloadmanager extends JTable
 					if (empty($this->asset_id) || ($currentAssetId != $this->asset_id && !empty($this->asset_id)))
 					{
 						// Update the asset_id field in this table.
-						$this->asset_id = (int) $asset->id;
+						$this->asset_id = (int)$asset->id;
 
 						$query = $this->_db->getQuery(true)
 							->update($this->_db->quoteName($this->_tbl))
-							->set('asset_id = ' . (int) $this->asset_id);
+							->set('asset_id = ' . (int)$this->asset_id);
 						$this->appendPrimaryKeys($query);
 						$this->_db->setQuery($query)->execute();
 					}

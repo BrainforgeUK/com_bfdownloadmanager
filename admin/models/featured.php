@@ -23,7 +23,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param array $config An optional associative array of configuration settings.
 	 *
 	 * @see     JControllerLegacy
 	 * @since   1.6
@@ -82,7 +82,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 			$this->getState(
 				'list.select',
 				'a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.catid, a.state, a.access, a.created, a.hits,' .
-					'a.created_by, a.featured, a.language, a.created_by_alias, a.publish_up, a.publish_down'
+				'a.created_by, a.featured, a.language, a.created_by_alias, a.publish_up, a.publish_down'
 			)
 		);
 		$query->from('#__bfdownloadmanager AS a');
@@ -122,7 +122,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		// Filter by access level.
 		if ($access = $this->getState('filter.access'))
 		{
-			$query->where('a.access = ' . (int) $access);
+			$query->where('a.access = ' . (int)$access);
 		}
 
 		// Filter by access level on categories.
@@ -137,7 +137,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 
 		if (is_numeric($published))
 		{
-			$query->where('a.state = ' . (int) $published);
+			$query->where('a.state = ' . (int)$published);
 		}
 		elseif ($published === '')
 		{
@@ -154,9 +154,9 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 			$cat_tbl->load($categoryId);
 			$rgt = $cat_tbl->rgt;
 			$lft = $cat_tbl->lft;
-			$baselevel = (int) $cat_tbl->level;
-			$query->where('c.lft >= ' . (int) $lft)
-				->where('c.rgt <= ' . (int) $rgt);
+			$baselevel = (int)$cat_tbl->level;
+			$query->where('c.lft >= ' . (int)$lft)
+				->where('c.rgt <= ' . (int)$rgt);
 		}
 		elseif (is_array($categoryId))
 		{
@@ -167,7 +167,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		// Filter on the level.
 		if ($level = $this->getState('filter.level'))
 		{
-			$query->where('c.level <= ' . ((int) $level + (int) $baselevel - 1));
+			$query->where('c.level <= ' . ((int)$level + (int)$baselevel - 1));
 		}
 
 		// Filter by author
@@ -176,7 +176,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		if (is_numeric($authorId))
 		{
 			$type = $this->getState('filter.author_id.include', true) ? '= ' : '<>';
-			$query->where('a.created_by ' . $type . (int) $authorId);
+			$query->where('a.created_by ' . $type . (int)$authorId);
 		}
 		elseif (is_array($authorId))
 		{
@@ -192,7 +192,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		{
 			if (stripos($search, 'id:') === 0)
 			{
-				$query->where('a.id = ' . (int) substr($search, 3));
+				$query->where('a.id = ' . (int)substr($search, 3));
 			}
 			elseif (stripos($search, 'author:') === 0)
 			{
@@ -217,7 +217,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 
 		if (is_numeric($tagId))
 		{
-			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int)$tagId)
 				->join(
 					'LEFT',
 					$db->quoteName('#__bfdownloadmanageritem_tag_map', 'tagmap')
@@ -227,7 +227,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		}
 
 		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.ordering', 'a.title');
+		$orderCol = $this->state->get('list.ordering', 'a.title');
 		$orderDirn = $this->state->get('list.direction', 'ASC');
 
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
@@ -240,8 +240,8 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
+	 * @param string $ordering An optional ordering field.
+	 * @param string $direction An optional direction (asc|desc).
 	 *
 	 * @return  void
 	 *

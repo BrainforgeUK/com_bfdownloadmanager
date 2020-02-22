@@ -21,7 +21,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param array $config An optional associative array of configuration settings.
 	 *
 	 * @since   1.6
 	 * @see     JControllerLegacy
@@ -71,8 +71,8 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
+	 * @param string $ordering An optional ordering field.
+	 * @param string $direction An optional direction (asc|desc).
 	 *
 	 * @return  void
 	 *
@@ -110,10 +110,10 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		$formSubmited = $app->input->post->get('form_submited');
 
-		$access     = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access');
-		$authorId   = $this->getUserStateFromRequest($this->context . '.filter.author_id', 'filter_author_id');
+		$access = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access');
+		$authorId = $this->getUserStateFromRequest($this->context . '.filter.author_id', 'filter_author_id');
 		$categoryId = $this->getUserStateFromRequest($this->context . '.filter.category_id', 'filter_category_id');
-		$tag        = $this->getUserStateFromRequest($this->context . '.filter.tag', 'filter_tag', '');
+		$tag = $this->getUserStateFromRequest($this->context . '.filter.tag', 'filter_tag', '');
 
 		if ($formSubmited)
 		{
@@ -148,7 +148,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param string $id A prefix for the store id.
 	 *
 	 * @return  string  A store id.
 	 *
@@ -178,9 +178,9 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db    = $this->getDbo();
+		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-		$user  = JFactory::getUser();
+		$user = JFactory::getUser();
 
 		// Select the required fields from the table.
 		$query->select(
@@ -238,7 +238,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		if (is_numeric($access))
 		{
-			$query->where('a.access = ' . (int) $access);
+			$query->where('a.access = ' . (int)$access);
 		}
 		elseif (is_array($access))
 		{
@@ -260,7 +260,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		if (is_numeric($published))
 		{
-			$query->where('a.state = ' . (int) $published);
+			$query->where('a.state = ' . (int)$published);
 		}
 		elseif ($published === '')
 		{
@@ -287,9 +287,9 @@ class BfdownloadmanagerModelDownloads extends JModelList
 			{
 				$categoryTable->load($filter_catid);
 				$subCatItemsWhere[] = '(' .
-					($level ? 'c.level <= ' . ((int) $level + (int) $categoryTable->level - 1) . ' AND ' : '') .
-					'c.lft >= ' . (int) $categoryTable->lft . ' AND ' .
-					'c.rgt <= ' . (int) $categoryTable->rgt . ')';
+					($level ? 'c.level <= ' . ((int)$level + (int)$categoryTable->level - 1) . ' AND ' : '') .
+					'c.lft >= ' . (int)$categoryTable->lft . ' AND ' .
+					'c.rgt <= ' . (int)$categoryTable->rgt . ')';
 			}
 
 			$query->where('(' . implode(' OR ', $subCatItemsWhere) . ')');
@@ -298,7 +298,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		// Case: Using only the by level filter
 		elseif ($level)
 		{
-			$query->where('c.level <= ' . (int) $level);
+			$query->where('c.level <= ' . (int)$level);
 		}
 
 		// Filter by author
@@ -307,7 +307,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		if (is_numeric($authorId))
 		{
 			$type = $this->getState('filter.author_id.include', true) ? '= ' : '<>';
-			$query->where('a.created_by ' . $type . (int) $authorId);
+			$query->where('a.created_by ' . $type . (int)$authorId);
 		}
 		elseif (is_array($authorId))
 		{
@@ -323,7 +323,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		{
 			if (stripos($search, 'id:') === 0)
 			{
-				$query->where('a.id = ' . (int) substr($search, 3));
+				$query->where('a.id = ' . (int)substr($search, 3));
 			}
 			elseif (stripos($search, 'author:') === 0)
 			{
@@ -345,13 +345,13 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		// Filter by a single or group of tags.
 		$hasTag = false;
-		$tagId  = $this->getState('filter.tag');
+		$tagId = $this->getState('filter.tag');
 
 		if (is_numeric($tagId))
 		{
 			$hasTag = true;
 
-			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId);
+			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int)$tagId);
 		}
 		elseif (is_array($tagId))
 		{
@@ -375,7 +375,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		}
 
 		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.ordering', 'a.id');
+		$orderCol = $this->state->get('list.ordering', 'a.id');
 		$orderDirn = $this->state->get('list.direction', 'DESC');
 
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
@@ -393,7 +393,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	public function getAuthors()
 	{
 		// Create a new query object.
-		$db    = $this->getDbo();
+		$db = $this->getDbo();
 		$query = $db->getQuery(true);
 
 		// Construct the query

@@ -19,7 +19,7 @@ class BfdownloadmanagerController extends JControllerLegacy
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param array $config An optional associative array of configuration settings.
 	 * Recognized key values include 'name', 'default_task', 'model_path', and
 	 * 'view_path' (this list is not meant to be comprehensive).
 	 *
@@ -47,8 +47,8 @@ class BfdownloadmanagerController extends JControllerLegacy
 	/**
 	 * Method to display a view.
 	 *
-	 * @param   boolean  $cachable   If true, the view output will be cached.
-	 * @param   boolean  $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 * @param boolean $cachable If true, the view output will be cached.
+	 * @param boolean $urlparams An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return  JController  This object to support chaining.
 	 *
@@ -63,7 +63,7 @@ class BfdownloadmanagerController extends JControllerLegacy
 		 * Note we are using a_id to avoid collisions with the router and the return page.
 		 * Frontend is a bit messier than the backend.
 		 */
-		$id    = $this->input->getInt('a_id');
+		$id = $this->input->getInt('a_id');
 		$vName = $this->input->getCmd('view', 'categories');
 		$this->input->set('view', $vName);
 
@@ -71,7 +71,7 @@ class BfdownloadmanagerController extends JControllerLegacy
 
 		if ($user->get('id')
 			|| ($this->input->getMethod() === 'POST'
-			&& (($vName === 'category' && $this->input->get('layout') !== 'blog') || $vName === 'archive' )))
+				&& (($vName === 'category' && $this->input->get('layout') !== 'blog') || $vName === 'archive')))
 		{
 			$cachable = false;
 		}

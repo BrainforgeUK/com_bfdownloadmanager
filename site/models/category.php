@@ -38,30 +38,30 @@ class BfdownloadmanagerModelCategory extends JModelList
 	/**
 	 * Model context string.
 	 *
-	 * @var		string
+	 * @var        string
 	 */
 	protected $_context = 'com_bfdownloadmanager.category';
 
 	/**
 	 * The category that applies.
 	 *
-	 * @access	protected
-	 * @var		object
+	 * @access    protected
+	 * @var        object
 	 */
 	protected $_category = null;
 
 	/**
 	 * The list of other newfeed categories.
 	 *
-	 * @access	protected
-	 * @var		array
+	 * @access    protected
+	 * @var        array
 	 */
 	protected $_categories = null;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param array $config An optional associative array of configuration settings.
 	 *
 	 * @since   1.6
 	 */
@@ -100,8 +100,8 @@ class BfdownloadmanagerModelCategory extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   The field to order on.
-	 * @param   string  $direction  The direction to order on.
+	 * @param string $ordering The field to order on.
+	 * @param string $direction The direction to order on.
 	 *
 	 * @return  void
 	 *
@@ -110,7 +110,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$app = JFactory::getApplication('site');
-		$pk  = $app->input->getInt('id');
+		$pk = $app->input->getInt('id');
 
 		$this->setState('category.id', $pk);
 
@@ -127,7 +127,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 		$mergedParams->merge($params);
 
 		$this->setState('params', $mergedParams);
-		$user  = JFactory::getUser();
+		$user = JFactory::getUser();
 
 		$asset = 'com_bfdownloadmanager';
 
@@ -136,7 +136,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 			$asset .= '.category.' . $pk;
 		}
 
-		if ((!$user->authorise('core.edit.state', $asset)) &&  (!$user->authorise('core.edit', $asset)))
+		if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset)))
 		{
 			// Limit to published for people who can't edit or edit.state.
 			$this->setState('filter.published', 1);
@@ -271,19 +271,19 @@ class BfdownloadmanagerModelCategory extends JModelList
 	/**
 	 * Build the orderby for the query
 	 *
-	 * @return  string	$orderby portion of query
+	 * @return  string    $orderby portion of query
 	 *
 	 * @since   1.5
 	 */
 	protected function _buildBfdownloadmanagerOrderBy()
 	{
-		$app       = JFactory::getApplication('site');
-		$db        = $this->getDbo();
-		$params    = $this->state->params;
-		$itemid    = $app->input->get('id', 0, 'int') . ':' . $app->input->get('Itemid', 0, 'int');
-		$orderCol  = $app->getUserStateFromRequest('com_bfdownloadmanager.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
+		$app = JFactory::getApplication('site');
+		$db = $this->getDbo();
+		$params = $this->state->params;
+		$itemid = $app->input->get('id', 0, 'int') . ':' . $app->input->get('Itemid', 0, 'int');
+		$orderCol = $app->getUserStateFromRequest('com_bfdownloadmanager.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
 		$orderDirn = $app->getUserStateFromRequest('com_bfdownloadmanager.category.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
-		$orderby   = ' ';
+		$orderby = ' ';
 
 		if (!in_array($orderCol, $this->filter_fields))
 		{
@@ -300,11 +300,11 @@ class BfdownloadmanagerModelCategory extends JModelList
 			$orderby .= $db->escape($orderCol) . ' ' . $db->escape($orderDirn) . ', ';
 		}
 
-		$downloadOrderby   = $params->get('orderby_sec', 'rdate');
+		$downloadOrderby = $params->get('orderby_sec', 'rdate');
 		$downloadOrderDate = $params->get('order_date');
-		$categoryOrderby  = $params->def('orderby_pri', '');
-		$secondary        = BfdownloadmanagerHelperQuery::orderbySecondary($downloadOrderby, $downloadOrderDate) . ', ';
-		$primary          = BfdownloadmanagerHelperQuery::orderbyPrimary($categoryOrderby);
+		$categoryOrderby = $params->def('orderby_pri', '');
+		$secondary = BfdownloadmanagerHelperQuery::orderbySecondary($downloadOrderby, $downloadOrderDate) . ', ';
+		$primary = BfdownloadmanagerHelperQuery::orderbyPrimary($categoryOrderby);
 
 		$orderby .= $primary . ' ' . $secondary . ' a.created ';
 
@@ -344,7 +344,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 				$params = $this->state->params;
 				$options = array();
 				$options['countItems'] = $params->get('show_cat_num_downloads', 1) || !$params->get('show_empty_categories_cat', 0);
-				$options['access']     = $params->get('check_access_rights', 1);
+				$options['access'] = $params->get('check_access_rights', 1);
 			}
 			else
 			{
@@ -357,7 +357,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 			// Compute selected asset permissions.
 			if (is_object($this->_item))
 			{
-				$user  = JFactory::getUser();
+				$user = JFactory::getUser();
 				$asset = 'com_bfdownloadmanager.category.' . $this->_item->id;
 
 				// Check general create permission.
@@ -472,7 +472,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 	/**
 	 * Increment the hit counter for the category.
 	 *
-	 * @param   int  $pk  Optional primary key of the category to increment.
+	 * @param int $pk Optional primary key of the category to increment.
 	 *
 	 * @return  boolean True if successful; false otherwise and internal error set.
 	 */
@@ -483,7 +483,7 @@ class BfdownloadmanagerModelCategory extends JModelList
 
 		if ($hitcount)
 		{
-			$pk = (!empty($pk)) ? $pk : (int) $this->getState('category.id');
+			$pk = (!empty($pk)) ? $pk : (int)$this->getState('category.id');
 
 			$table = JTable::getInstance('Category', 'JTable');
 			$table->load($pk);

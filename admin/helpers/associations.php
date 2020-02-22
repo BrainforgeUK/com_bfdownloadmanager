@@ -21,7 +21,7 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	/**
 	 * The extension name
 	 *
-	 * @var     array   $extension
+	 * @var     array $extension
 	 *
 	 * @since   3.7.0
 	 */
@@ -30,7 +30,7 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	/**
 	 * Array of item types
 	 *
-	 * @var     array   $itemTypes
+	 * @var     array $itemTypes
 	 *
 	 * @since   3.7.0
 	 */
@@ -39,7 +39,7 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	/**
 	 * Has the extension association support
 	 *
-	 * @var     boolean   $associationsSupport
+	 * @var     boolean $associationsSupport
 	 *
 	 * @since   3.7.0
 	 */
@@ -48,8 +48,8 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	/**
 	 * Get the associated items for an item
 	 *
-	 * @param   string  $typeName  The item type
-	 * @param   int     $id        The id of item for which we need the associated items
+	 * @param string $typeName The item type
+	 * @param int $id The id of item for which we need the associated items
 	 *
 	 * @return  array
 	 *
@@ -59,12 +59,12 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	{
 		$type = $this->getType($typeName);
 
-		$context    = $this->extension . '.item';
+		$context = $this->extension . '.item';
 		$catidField = 'catid';
 
 		if ($typeName === 'category')
 		{
-			$context    = 'com_categories.item';
+			$context = 'com_categories.item';
 			$catidField = '';
 		}
 
@@ -85,8 +85,8 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	/**
 	 * Get item information
 	 *
-	 * @param   string  $typeName  The item type
-	 * @param   int     $id        The id of item for which we need the associated items
+	 * @param string $typeName The item type
+	 * @param int $id The id of item for which we need the associated items
 	 *
 	 * @return  JTable|null
 	 *
@@ -125,7 +125,7 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	/**
 	 * Get information about the type
 	 *
-	 * @param   string  $typeName  The item type
+	 * @param string $typeName The item type
 	 *
 	 * @return  array  Array of item types
 	 *
@@ -133,11 +133,11 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 	 */
 	public function getType($typeName = '')
 	{
-		$fields  = $this->getFieldsTemplate();
-		$tables  = array();
-		$joins   = array();
+		$fields = $this->getFieldsTemplate();
+		$tables = array();
+		$joins = array();
 		$support = $this->getSupportTemplate();
-		$title   = '';
+		$title = '';
 
 		if (in_array($typeName, $this->itemTypes))
 		{
@@ -180,11 +180,11 @@ class BfdownloadmanagerAssociationsHelper extends AssociationExtensionHelper
 		}
 
 		return array(
-			'fields'  => $fields,
+			'fields' => $fields,
 			'support' => $support,
-			'tables'  => $tables,
-			'joins'   => $joins,
-			'title'   => $title
+			'tables' => $tables,
+			'joins' => $joins,
+			'title' => $title
 		);
 	}
 }

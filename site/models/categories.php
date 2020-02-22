@@ -21,14 +21,14 @@ class BfdownloadmanagerModelCategories extends JModelList
 	/**
 	 * Model context string.
 	 *
-	 * @var		string
+	 * @var        string
 	 */
 	public $_context = 'com_bfdownloadmanager.categories';
 
 	/**
 	 * The category context (allows other extensions to derived from this model).
 	 *
-	 * @var		string
+	 * @var        string
 	 */
 	protected $_extension = 'com_bfdownloadmanager';
 
@@ -39,8 +39,8 @@ class BfdownloadmanagerModelCategories extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   The field to order on.
-	 * @param   string  $direction  The direction to order on.
+	 * @param string $ordering The field to order on.
+	 * @param string $direction The direction to order on.
 	 *
 	 * @return  void
 	 *
@@ -58,8 +58,8 @@ class BfdownloadmanagerModelCategories extends JModelList
 		$params = $app->getParams();
 		$this->setState('params', $params);
 
-		$this->setState('filter.published',	1);
-		$this->setState('filter.access',	true);
+		$this->setState('filter.published', 1);
+		$this->setState('filter.access', true);
 	}
 
 	/**
@@ -69,17 +69,17 @@ class BfdownloadmanagerModelCategories extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param string $id A prefix for the store id.
 	 *
 	 * @return  string  A store id.
 	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':' . $this->getState('filter.extension');
-		$id	.= ':' . $this->getState('filter.published');
-		$id	.= ':' . $this->getState('filter.access');
-		$id	.= ':' . $this->getState('filter.parentId');
+		$id .= ':' . $this->getState('filter.extension');
+		$id .= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.access');
+		$id .= ':' . $this->getState('filter.parentId');
 
 		return parent::getStoreId($id);
 	}
@@ -87,7 +87,7 @@ class BfdownloadmanagerModelCategories extends JModelList
 	/**
 	 * Redefine the function an add some properties to make the styling more easy
 	 *
-	 * @param   bool  $recursive  True if you want to return children recursively.
+	 * @param bool $recursive True if you want to return children recursively.
 	 *
 	 * @return  mixed  An array of data items on success, false on failure.
 	 *

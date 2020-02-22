@@ -29,15 +29,15 @@ class BfdownloadmanagerViewArchive extends JViewLegacy
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
 	public function display($tpl = null)
 	{
-		$user       = JFactory::getUser();
-		$state      = $this->get('State');
-		$items      = $this->get('Items');
+		$user = JFactory::getUser();
+		$state = $this->get('State');
+		$items = $this->get('Items');
 		$pagination = $this->get('Pagination');
 
 		// Get the page/component configuration
@@ -47,7 +47,7 @@ class BfdownloadmanagerViewArchive extends JViewLegacy
 
 		foreach ($items as $item)
 		{
-			$item->catslug     = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
+			$item->catslug = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
 			$item->parent_slug = $item->parent_alias ? ($item->parent_id . ':' . $item->parent_alias) : $item->parent_id;
 
 			// No link for ROOT category
@@ -66,7 +66,7 @@ class BfdownloadmanagerViewArchive extends JViewLegacy
 				$item->text = $item->introtext;
 			}
 
-			$dispatcher->trigger('onBfdownloadmanagerPrepare', array ('com_bfdownloadmanager.archive', &$item, &$item->params, 0));
+			$dispatcher->trigger('onBfdownloadmanagerPrepare', array('com_bfdownloadmanager.archive', &$item, &$item->params, 0));
 
 			// Old plugins: Use processed text as introtext
 			$item->introtext = $item->text;
@@ -131,11 +131,11 @@ class BfdownloadmanagerViewArchive extends JViewLegacy
 		// Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
 
-		$this->filter     = $state->get('list.filter');
-		$this->form       = &$form;
-		$this->items      = &$items;
-		$this->params     = &$params;
-		$this->user       = &$user;
+		$this->filter = $state->get('list.filter');
+		$this->form = &$form;
+		$this->items = &$items;
+		$this->params = &$params;
+		$this->user = &$user;
 		$this->pagination = &$pagination;
 		$this->pagination->setAdditionalUrlParam('month', $state->get('filter.month'));
 		$this->pagination->setAdditionalUrlParam('year', $state->get('filter.year'));
@@ -152,7 +152,7 @@ class BfdownloadmanagerViewArchive extends JViewLegacy
 	 */
 	protected function _prepareDocument()
 	{
-		$app   = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$menus = $app->getMenu();
 		$title = null;
 

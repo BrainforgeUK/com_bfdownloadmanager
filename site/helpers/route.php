@@ -19,9 +19,9 @@ abstract class BfdownloadmanagerHelperRoute
 	/**
 	 * Get the download route.
 	 *
-	 * @param   integer  $id        The route of the bfdownloadmanager item.
-	 * @param   integer  $catid     The category ID.
-	 * @param   integer  $language  The language code.
+	 * @param integer $id The route of the bfdownloadmanager item.
+	 * @param integer $catid The category ID.
+	 * @param integer $language The language code.
 	 *
 	 * @return  string  The download route.
 	 *
@@ -32,7 +32,7 @@ abstract class BfdownloadmanagerHelperRoute
 		// Create the link
 		$link = 'index.php?option=com_bfdownloadmanager&view=download&id=' . $id;
 
-		if ((int) $catid > 1)
+		if ((int)$catid > 1)
 		{
 			$link .= '&catid=' . $catid;
 		}
@@ -48,8 +48,8 @@ abstract class BfdownloadmanagerHelperRoute
 	/**
 	 * Get the category route.
 	 *
-	 * @param   integer  $catid     The category ID.
-	 * @param   integer  $language  The language code.
+	 * @param integer $catid The category ID.
+	 * @param integer $language The language code.
 	 *
 	 * @return  string  The download route.
 	 *
@@ -63,7 +63,7 @@ abstract class BfdownloadmanagerHelperRoute
 		}
 		else
 		{
-			$id = (int) $catid;
+			$id = (int)$catid;
 		}
 
 		if ($id < 1)
@@ -86,7 +86,7 @@ abstract class BfdownloadmanagerHelperRoute
 	/**
 	 * Get the form route.
 	 *
-	 * @param   integer  $id  The form ID.
+	 * @param integer $id The form ID.
 	 *
 	 * @return  string  The download route.
 	 *
@@ -94,6 +94,6 @@ abstract class BfdownloadmanagerHelperRoute
 	 */
 	public static function getFormRoute($id)
 	{
-		return 'index.php?option=com_bfdownloadmanager&task=download.edit&a_id=' . (int) $id;
+		return 'index.php?option=com_bfdownloadmanager&task=download.edit&a_id=' . (int)$id;
 	}
 }
