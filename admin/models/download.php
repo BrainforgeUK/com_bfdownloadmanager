@@ -884,7 +884,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			$db = $this->getDbo();
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__bfdownloadmanager_frontpage'))
-				->where('content_id IN (' . implode(',', $pks) . ')');
+				->where('bfdownloadmanager_id IN (' . implode(',', $pks) . ')');
 			$db->setQuery($query);
 			$db->execute();
 		}
