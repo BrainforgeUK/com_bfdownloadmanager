@@ -33,16 +33,16 @@ class JFormFieldModal_Download extends JFormField
 	 */
 	protected function getInput()
 	{
-		$allowNew    = ((string) $this->element['new'] == 'true');
-		$allowEdit   = ((string) $this->element['edit'] == 'true');
-		$allowClear  = ((string) $this->element['clear'] != 'false');
-		$allowSelect = ((string) $this->element['select'] != 'false');
+		$allowNew = ((string)$this->element['new'] == 'true');
+		$allowEdit = ((string)$this->element['edit'] == 'true');
+		$allowClear = ((string)$this->element['clear'] != 'false');
+		$allowSelect = ((string)$this->element['select'] != 'false');
 
 		// Load language
 		JFactory::getLanguage()->load('com_bfdownloadmanager', JPATH_ADMINISTRATOR);
 
 		// The active download id field.
-		$value = (int) $this->value > 0 ? (int) $this->value : '';
+		$value = (int)$this->value > 0 ? (int)$this->value : '';
 
 		// Create the modal id.
 		$modalId = 'Download_' . $this->id;
@@ -75,37 +75,36 @@ class JFormFieldModal_Download extends JFormField
 
 		// Setup variables for display.
 		$linkDownloads = 'index.php?option=com_bfdownloadmanager&amp;view=downloads&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
-		$linkDownload  = 'index.php?option=com_bfdownloadmanager&amp;view=download&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
+		$linkDownload = 'index.php?option=com_bfdownloadmanager&amp;view=download&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
 
 		if (isset($this->element['language']))
 		{
 			$linkDownloads .= '&amp;forcedLanguage=' . $this->element['language'];
-			$linkDownload  .= '&amp;forcedLanguage=' . $this->element['language'];
-			$modalTitle    = JText::_('COM_BFDOWNLOADMANAGER_CHANGE_DOWNLOAD') . ' &#8212; ' . $this->element['label'];
+			$linkDownload .= '&amp;forcedLanguage=' . $this->element['language'];
+			$modalTitle = JText::_('COM_BFDOWNLOADMANAGER_CHANGE_DOWNLOAD') . ' &#8212; ' . $this->element['label'];
 		}
 		else
 		{
-			$modalTitle    = JText::_('COM_BFDOWNLOADMANAGER_CHANGE_DOWNLOAD');
+			$modalTitle = JText::_('COM_BFDOWNLOADMANAGER_CHANGE_DOWNLOAD');
 		}
 
 		$urlSelect = $linkDownloads . '&amp;function=jSelectDownload_' . $this->id;
-		$urlEdit   = $linkDownload . '&amp;task=download.edit&amp;id=\' + document.getElementById("' . $this->id . '_id").value + \'';
-		$urlNew    = $linkDownload . '&amp;task=download.add';
+		$urlEdit = $linkDownload . '&amp;task=download.edit&amp;id=\' + document.getElementById("' . $this->id . '_id").value + \'';
+		$urlNew = $linkDownload . '&amp;task=download.add';
 
 		if ($value)
 		{
-			$db    = JFactory::getDbo();
+			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->select($db->quoteName('title'))
 				->from($db->quoteName('#__bfdownloadmanager'))
-				->where($db->quoteName('id') . ' = ' . (int) $value);
+				->where($db->quoteName('id') . ' = ' . (int)$value);
 			$db->setQuery($query);
 
 			try
 			{
 				$title = $db->loadResult();
-			}
-			catch (RuntimeException $e)
+			} catch (RuntimeException $e)
 			{
 				JError::raiseWarning(500, $e->getMessage());
 			}
@@ -114,7 +113,7 @@ class JFormFieldModal_Download extends JFormField
 		$title = empty($title) ? JText::_('COM_BFDOWNLOADMANAGER_SELECT_A_DOWNLOAD') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
 		// The current download display field.
-		$html  = '<span class="input-append">';
+		$html = '<span class="input-append">';
 		$html .= '<input class="input-medium" id="' . $this->id . '_name" type="text" value="' . $title . '" disabled="disabled" size="35" />';
 
 		// Select download button
@@ -180,13 +179,13 @@ class JFormFieldModal_Download extends JFormField
 				'bootstrap.renderModal',
 				'ModalSelect' . $modalId,
 				array(
-					'title'       => $modalTitle,
-					'url'         => $urlSelect,
-					'height'      => '400px',
-					'width'       => '800px',
-					'bodyHeight'  => '70',
-					'modalWidth'  => '80',
-					'footer'      => '<a role="button" class="btn" data-dismiss="modal" aria-hidden="true">' . JText::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</a>',
+					'title' => $modalTitle,
+					'url' => $urlSelect,
+					'height' => '400px',
+					'width' => '800px',
+					'bodyHeight' => '70',
+					'modalWidth' => '80',
+					'footer' => '<a role="button" class="btn" data-dismiss="modal" aria-hidden="true">' . JText::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</a>',
 				)
 			);
 		}
@@ -198,24 +197,24 @@ class JFormFieldModal_Download extends JFormField
 				'bootstrap.renderModal',
 				'ModalNew' . $modalId,
 				array(
-					'title'       => JText::_('COM_BFDOWNLOADMANAGER_NEW_DOWNLOAD'),
-					'backdrop'    => 'static',
-					'keyboard'    => false,
+					'title' => JText::_('COM_BFDOWNLOADMANAGER_NEW_DOWNLOAD'),
+					'backdrop' => 'static',
+					'keyboard' => false,
 					'closeButton' => false,
-					'url'         => $urlNew,
-					'height'      => '400px',
-					'width'       => '800px',
-					'bodyHeight'  => '70',
-					'modalWidth'  => '80',
-					'footer'      => '<a role="button" class="btn" aria-hidden="true"'
-							. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'add\', \'download\', \'cancel\', \'item-form\'); return false;">'
-							. JText::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</a>'
-							. '<a role="button" class="btn btn-primary" aria-hidden="true"'
-							. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'add\', \'download\', \'save\', \'item-form\'); return false;">'
-							. JText::_('JSAVE') . '</a>'
-							. '<a role="button" class="btn btn-success" aria-hidden="true"'
-							. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'add\', \'download\', \'apply\', \'item-form\'); return false;">'
-							. JText::_('JAPPLY') . '</a>',
+					'url' => $urlNew,
+					'height' => '400px',
+					'width' => '800px',
+					'bodyHeight' => '70',
+					'modalWidth' => '80',
+					'footer' => '<a role="button" class="btn" aria-hidden="true"'
+						. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'add\', \'download\', \'cancel\', \'item-form\'); return false;">'
+						. JText::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</a>'
+						. '<a role="button" class="btn btn-primary" aria-hidden="true"'
+						. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'add\', \'download\', \'save\', \'item-form\'); return false;">'
+						. JText::_('JSAVE') . '</a>'
+						. '<a role="button" class="btn btn-success" aria-hidden="true"'
+						. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'add\', \'download\', \'apply\', \'item-form\'); return false;">'
+						. JText::_('JAPPLY') . '</a>',
 				)
 			);
 		}
@@ -227,24 +226,24 @@ class JFormFieldModal_Download extends JFormField
 				'bootstrap.renderModal',
 				'ModalEdit' . $modalId,
 				array(
-					'title'       => JText::_('COM_BFDOWNLOADMANAGER_EDIT_DOWNLOAD'),
-					'backdrop'    => 'static',
-					'keyboard'    => false,
+					'title' => JText::_('COM_BFDOWNLOADMANAGER_EDIT_DOWNLOAD'),
+					'backdrop' => 'static',
+					'keyboard' => false,
 					'closeButton' => false,
-					'url'         => $urlEdit,
-					'height'      => '400px',
-					'width'       => '800px',
-					'bodyHeight'  => '70',
-					'modalWidth'  => '80',
-					'footer'      => '<a role="button" class="btn" aria-hidden="true"'
-							. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'edit\', \'download\', \'cancel\', \'item-form\'); return false;">'
-							. JText::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</a>'
-							. '<a role="button" class="btn btn-primary" aria-hidden="true"'
-							. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'edit\', \'download\', \'save\', \'item-form\'); return false;">'
-							. JText::_('JSAVE') . '</a>'
-							. '<a role="button" class="btn btn-success" aria-hidden="true"'
-							. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'edit\', \'download\', \'apply\', \'item-form\'); return false;">'
-							. JText::_('JAPPLY') . '</a>',
+					'url' => $urlEdit,
+					'height' => '400px',
+					'width' => '800px',
+					'bodyHeight' => '70',
+					'modalWidth' => '80',
+					'footer' => '<a role="button" class="btn" aria-hidden="true"'
+						. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'edit\', \'download\', \'cancel\', \'item-form\'); return false;">'
+						. JText::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</a>'
+						. '<a role="button" class="btn btn-primary" aria-hidden="true"'
+						. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'edit\', \'download\', \'save\', \'item-form\'); return false;">'
+						. JText::_('JSAVE') . '</a>'
+						. '<a role="button" class="btn btn-success" aria-hidden="true"'
+						. ' onclick="window.processModalEdit(this, \'' . $this->id . '\', \'edit\', \'download\', \'apply\', \'item-form\'); return false;">'
+						. JText::_('JAPPLY') . '</a>',
 				)
 			);
 		}
@@ -252,7 +251,7 @@ class JFormFieldModal_Download extends JFormField
 		// Note: class='required' for client side validation.
 		$class = $this->required ? ' class="required modal-value"' : '';
 
-		$html .= '<input type="hidden" id="' . $this->id . '_id" ' . $class . ' data-required="' . (int) $this->required . '" name="' . $this->name
+		$html .= '<input type="hidden" id="' . $this->id . '_id" ' . $class . ' data-required="' . (int)$this->required . '" name="' . $this->name
 			. '" data-text="' . htmlspecialchars(JText::_('COM_BFDOWNLOADMANAGER_SELECT_A_DOWNLOAD', true), ENT_COMPAT, 'UTF-8') . '" value="' . $value . '" />';
 
 		return $html;

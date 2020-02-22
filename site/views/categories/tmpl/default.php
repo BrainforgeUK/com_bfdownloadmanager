@@ -36,6 +36,6 @@ jQuery(function($) {
 ?>
 <div class="categories-list<?php echo $this->pageclass_sfx; ?>">
 	<?php
-		echo $this->loadTemplate('items');
+	echo $this->loadTemplate('items');
 	?>
 </div>

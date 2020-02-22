@@ -29,30 +29,31 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
 	public function display($tpl = null)
 	{
-		$app        = JFactory::getApplication();
-		$user       = JFactory::getUser();
+		$app = JFactory::getApplication();
+		$user = JFactory::getUser();
 		$dispatcher = JEventDispatcher::getInstance();
 
-    $infetch = false;
-    switch($this->getLayout()) {
-      case 'fetch':
-    		$this->item  = $this->get('ItemWithDownloadfile');
-        $infetch = true;
-        break;
-      default:
-    		$this->item  = $this->get('Item');
-        break;
-    }
+		$infetch = false;
+		switch ($this->getLayout())
+		{
+			case 'fetch':
+				$this->item = $this->get('ItemWithDownloadfile');
+				$infetch = true;
+				break;
+			default:
+				$this->item = $this->get('Item');
+				break;
+		}
 		$this->print = $app->input->getBool('print');
 		$this->state = $this->get('State');
-		$this->user  = $user;
-    
+		$this->user = $user;
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
@@ -62,12 +63,12 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 		}
 
 		// Create a shortcut for $item.
-		$item            = $this->item;
+		$item = $this->item;
 		$item->tagLayout = new JLayoutFile('joomla.content.tags');
 
 		// Add router helpers.
-		$item->slug        = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
-		$item->catslug     = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
+		$item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
+		$item->catslug = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
 		$item->parent_slug = $item->parent_alias ? ($item->parent_id . ':' . $item->parent_alias) : $item->parent_id;
 
 		// No link for ROOT category
@@ -82,8 +83,8 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 		// Merge download params. If this is single-download view, menu params override download params
 		// Otherwise, download params override menu item params
 		$this->params = $this->state->get('params');
-		$active       = $app->getMenu()->getActive();
-		$temp         = clone $this->params;
+		$active = $app->getMenu()->getActive();
+		$temp = clone $this->params;
 
 		// Check to see which parameters should take priority
 		if ($active)
@@ -91,7 +92,7 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 			$currentLink = $active->link;
 
 			// If the current view is the active item and an download view for this download, then the menu item params take priority
-			if (strpos($currentLink, 'view=download') && strpos($currentLink, '&id=' . (string) $item->id))
+			if (strpos($currentLink, 'view=download') && strpos($currentLink, '&id=' . (string)$item->id))
 			{
 				// Load layout from active query (in case it is an alternative menu item)
 				if (isset($active->query['layout']))
@@ -199,7 +200,7 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 
 		// Process the bfdownloadmanager plugins.
 		JPluginHelper::importPlugin('bfdownloadmanager');
-		$dispatcher->trigger('onBfdownloadmanagerPrepare', array ('com_bfdownloadmanager.download', &$item, &$item->params, $offset));
+		$dispatcher->trigger('onBfdownloadmanagerPrepare', array('com_bfdownloadmanager.download', &$item, &$item->params, $offset));
 
 		$item->event = new stdClass;
 		$results = $dispatcher->trigger('onBfdownloadmanagerAfterTitle', array('com_bfdownloadmanager.download', &$item, &$item->params, $offset));
@@ -227,10 +228,10 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 	 */
 	protected function _prepareDocument()
 	{
-		$app     = JFactory::getApplication();
-		$menus   = $app->getMenu();
+		$app = JFactory::getApplication();
+		$menus = $app->getMenu();
 		$pathway = $app->getPathway();
-		$title   = null;
+		$title = null;
 
 		/**
 		 * Because the application sets a default page title,
@@ -249,7 +250,7 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 
 		$title = $this->params->get('page_title', '');
 
-		$id = (int) @$menu->query['id'];
+		$id = (int)@$menu->query['id'];
 
 		// If the menu item does not concern this download
 		if ($menu && ($menu->query['option'] !== 'com_bfdownloadmanager' || $menu->query['view'] !== 'download' || $id != $this->item->id))
@@ -257,12 +258,12 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 			// If a browser page title is defined, use that, then fall back to the download title if set, then fall back to the page_title option
 			$title = $this->item->params->get('download_page_title', $this->item->title ?: $title);
 
-			$path     = array(array('title' => $this->item->title, 'link' => ''));
+			$path = array(array('title' => $this->item->title, 'link' => ''));
 			$category = JCategories::getInstance('Bfdownloadmanager')->get($this->item->catid);
 
 			while ($category && ($menu->query['option'] !== 'com_bfdownloadmanager' || $menu->query['view'] === 'download' || $id != $category->id) && $category->id > 1)
 			{
-				$path[]   = array('title' => $category->title, 'link' => BfdownloadmanagerHelperRoute::getCategoryRoute($category->id));
+				$path[] = array('title' => $category->title, 'link' => BfdownloadmanagerHelperRoute::getCategoryRoute($category->id));
 				$category = $category->getParent();
 			}
 

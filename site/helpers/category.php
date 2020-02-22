@@ -19,7 +19,7 @@ class BfdownloadmanagerCategories extends JCategories
 	/**
 	 * Class constructor
 	 *
-	 * @param   array  $options  Array of options
+	 * @param array $options Array of options
 	 *
 	 * @since   11.1
 	 */

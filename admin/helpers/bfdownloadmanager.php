@@ -20,13 +20,13 @@ use Joomla\Registry\Registry;
 class BfdownloadmanagerHelper extends JHelperContent
 {
 	public static $extension = 'com_bfdownloadmanager';
-  protected static $categories = null;
-  protected static $category = null;
+	protected static $categories = null;
+	protected static $category = null;
 
 	/**
 	 * Configure the Linkbar.
 	 *
-	 * @param   string  $vName  The name of the active view.
+	 * @param string $vName The name of the active view.
 	 *
 	 * @return  void
 	 *
@@ -53,28 +53,30 @@ class BfdownloadmanagerHelper extends JHelperContent
 
 		if (JComponentHelper::isEnabled('com_fields') && self::getParam('custom_fields_enable', '1'))
 		{
-      $user = JFactory::getUser('core.fields');
-      if ($user->authorise('core.manage', self::$extension)) {
-  			JHtmlSidebar::addEntry(
-  				JText::_('JGLOBAL_FIELDS'),
-  				'index.php?option=com_fields&context=' . self::$extension . '.download',
-  				$vName == 'fields.fields'
-  			);
-      }
-      if ($user->authorise('core.field.groups', self::$extension)) {
-  			JHtmlSidebar::addEntry(
-  				JText::_('JGLOBAL_FIELD_GROUPS'),
-  				'index.php?option=com_fields&view=groups&context=' . self::$extension . '.download',
-  				$vName == 'fields.groups'
-  			);
-      }
+			$user = JFactory::getUser('core.fields');
+			if ($user->authorise('core.manage', self::$extension))
+			{
+				JHtmlSidebar::addEntry(
+					JText::_('JGLOBAL_FIELDS'),
+					'index.php?option=com_fields&context=' . self::$extension . '.download',
+					$vName == 'fields.fields'
+				);
+			}
+			if ($user->authorise('core.field.groups', self::$extension))
+			{
+				JHtmlSidebar::addEntry(
+					JText::_('JGLOBAL_FIELD_GROUPS'),
+					'index.php?option=com_fields&view=groups&context=' . self::$extension . '.download',
+					$vName == 'fields.groups'
+				);
+			}
 		}
 	}
 
 	/**
 	 * Applies the content tag filters to arbitrary text as per settings for current user group
 	 *
-	 * @param   text  $text  The string to filter
+	 * @param text $text The string to filter
 	 *
 	 * @return  string  The filtered string
 	 *
@@ -89,8 +91,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 				JLog::WARNING,
 				'deprecated'
 			);
-		}
-		catch (RuntimeException $exception)
+		} catch (RuntimeException $exception)
 		{
 			// Informational log only
 		}
@@ -101,7 +102,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 	/**
 	 * Adds Count Items for Category Manager.
 	 *
-	 * @param   stdClass[]  &$items  The banner category objects
+	 * @param stdClass[]  &$items The banner category objects
 	 *
 	 * @return  stdClass[]
 	 *
@@ -120,7 +121,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 			$query = $db->getQuery(true);
 			$query->select('state, count(*) AS count')
 				->from($db->qn('#__bfdownloadmanager'))
-				->where('catid = ' . (int) $item->id)
+				->where('catid = ' . (int)$item->id)
 				->group('state');
 			$db->setQuery($query);
 			$downloads = $db->loadObjectList();
@@ -155,8 +156,8 @@ class BfdownloadmanagerHelper extends JHelperContent
 	/**
 	 * Adds Count Items for Tag Manager.
 	 *
-	 * @param   stdClass[]  &$items     The content objects
-	 * @param   string      $extension  The name of the active view.
+	 * @param stdClass[]  &$items The content objects
+	 * @param string $extension The name of the active view.
 	 *
 	 * @return  stdClass[]
 	 *
@@ -165,15 +166,15 @@ class BfdownloadmanagerHelper extends JHelperContent
 	public static function countTagItems(&$items, $extension)
 	{
 		$db = JFactory::getDbo();
-		$parts     = explode('.', $extension);
-		$section   = null;
+		$parts = explode('.', $extension);
+		$section = null;
 
 		if (count($parts) > 1)
 		{
 			$section = $parts[1];
 		}
 
-		$join  = $db->qn('#__bfdownloadmanager') . ' AS c ON ct.content_item_id=c.id';
+		$join = $db->qn('#__bfdownloadmanager') . ' AS c ON ct.content_item_id=c.id';
 		$state = 'state';
 
 		if ($section === 'category')
@@ -191,7 +192,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 			$query = $db->getQuery(true);
 			$query->select($state . ', count(*) AS count')
 				->from($db->qn('#__bfdownloadmanageritem_tag_map') . 'AS ct ')
-				->where('ct.tag_id = ' . (int) $item->id)
+				->where('ct.tag_id = ' . (int)$item->id)
 				->where('ct.type_alias =' . $db->q($extension))
 				->join('LEFT', $join)
 				->group('state');
@@ -229,7 +230,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 	 * Returns a valid section for downloads. If it is not valid then null
 	 * is returned.
 	 *
-	 * @param   string  $section  The section to get the mapping for
+	 * @param string $section The section to get the mapping for
 	 *
 	 * @return  string|null  The new section
 	 *
@@ -245,7 +246,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 				// Editing an download
 				case 'form':
 
-				// Category list view
+					// Category list view
 				case 'featured':
 				case 'category':
 					$section = 'download';
@@ -273,7 +274,7 @@ class BfdownloadmanagerHelper extends JHelperContent
 		JFactory::getLanguage()->load(self::$extension, JPATH_ADMINISTRATOR);
 
 		$contexts = array(
-			self::$extension . '.download'    => JText::_('COM_BFDOWNLOADMANAGER'),
+			self::$extension . '.download' => JText::_('COM_BFDOWNLOADMANAGER'),
 			self::$extension . '.categories' => JText::_('JCATEGORY')
 		);
 
@@ -285,70 +286,84 @@ class BfdownloadmanagerHelper extends JHelperContent
 	 *
 	 * @since   3.4
 	 */
-	public static function getParam($name, $default=null)
+	public static function getParam($name, $default = null)
 	{
-    $params = ComponentHelper::getParams(self::$extension);
-    return trim($params->get($name, $default));
+		$params = ComponentHelper::getParams(self::$extension);
+		return trim($params->get($name, $default));
 	}
 
 	/**
 	 */
-  public static function validateFilenameSuffix($filename, $suffix_list, $form=null) {
-    if (!empty($filename)) {
-      if (!self::filenameInSuffixArray($filename, $suffix_list)) {
-        if (!empty($form)) {
-          JFactory::getApplication()->enqueueMessage(jText::sprintf('COM_BFDOWNLOADMANAGER_SUFFIX_UNSUPPORTED', jText::_($form->getField('downloadfile')->getAttribute('label')), $filename), 'error');
-        }
-        return false;
-      }
-    }
-    return true;
-  }
+	public static function validateFilenameSuffix($filename, $suffix_list, $form = null)
+	{
+		if (!empty($filename))
+		{
+			if (!self::filenameInSuffixArray($filename, $suffix_list))
+			{
+				if (!empty($form))
+				{
+					JFactory::getApplication()->enqueueMessage(jText::sprintf('COM_BFDOWNLOADMANAGER_SUFFIX_UNSUPPORTED', jText::_($form->getField('downloadfile')->getAttribute('label')), $filename), 'error');
+				}
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 */
-  public static function suffixList2Array($suffix_list) {
-    $suffix_list = preg_replace('/^[^a-z0-9]+/', '', strtolower($suffix_list));
-    $suffix_list = preg_replace('/[^a-z0-9]+$/', '', $suffix_list);
-    if (!empty($suffix_list)) {
-      $suffix_list = preg_split('/[^a-z0-9]+/', $suffix_list);
-    }
-    return $suffix_list;
-  }
+	public static function suffixList2Array($suffix_list)
+	{
+		$suffix_list = preg_replace('/^[^a-z0-9]+/', '', strtolower($suffix_list));
+		$suffix_list = preg_replace('/[^a-z0-9]+$/', '', $suffix_list);
+		if (!empty($suffix_list))
+		{
+			$suffix_list = preg_split('/[^a-z0-9]+/', $suffix_list);
+		}
+		return $suffix_list;
+	}
 
 	/**
 	 */
-  public static function filenameInSuffixArray($filename, $suffix_list) {
-    if (!is_array($suffix_list)) {
-      $suffix_list = self::suffixList2Array($suffix_list);
-    }
-    if (empty($suffix_list)) {
-      return true;
-    }
-    return in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $suffix_list);
-  }
+	public static function filenameInSuffixArray($filename, $suffix_list)
+	{
+		if (!is_array($suffix_list))
+		{
+			$suffix_list = self::suffixList2Array($suffix_list);
+		}
+		if (empty($suffix_list))
+		{
+			return true;
+		}
+		return in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $suffix_list);
+	}
 
 	/**
 	 */
-	public static function getCategoryAttr($catid, $name) {
-    if (empty($catid)) {
-      return '';
-    }
-  
-    if (empty(self::$categories)) {
-      self::$categories = JCategories::getInstance('Bfdownloadmanager');
-      self::$category = array();
-    }
-    if (empty(self::$category[$catid])) {
-      $category = self::$categories->get($catid);
-      $category->attr = new Registry(json_decode($category->params));
-      self::$category[$catid] = $category;
-    }
-    
-    $value = trim(self::$category[$catid]->attr->get($name));
-    if ($value === null || $value === '') {
-      return self::getParam($name);
-    }
-    return trim(self::$category[$catid]->attr->get($name));
-  }
+	public static function getCategoryAttr($catid, $name)
+	{
+		if (empty($catid))
+		{
+			return '';
+		}
+
+		if (empty(self::$categories))
+		{
+			self::$categories = JCategories::getInstance('Bfdownloadmanager');
+			self::$category = array();
+		}
+		if (empty(self::$category[$catid]))
+		{
+			$category = self::$categories->get($catid);
+			$category->attr = new Registry(json_decode($category->params));
+			self::$category[$catid] = $category;
+		}
+
+		$value = trim(self::$category[$catid]->attr->get($name));
+		if ($value === null || $value === '')
+		{
+			return self::getParam($name);
+		}
+		return trim(self::$category[$catid]->attr->get($name));
+	}
 }

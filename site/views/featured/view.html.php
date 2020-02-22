@@ -43,7 +43,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
@@ -51,8 +51,8 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	{
 		$user = JFactory::getUser();
 
-		$state      = $this->get('State');
-		$items      = $this->get('Items');
+		$state = $this->get('State');
+		$items = $this->get('Items');
 		$pagination = $this->get('Pagination');
 
 		// Check for errors.
@@ -68,16 +68,16 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 		// PREPARE THE DATA
 
 		// Get the metrics for the structural page layout.
-		$numLeading = (int) $params->def('num_leading_downloads', 1);
-		$numIntro   = (int) $params->def('num_intro_downloads', 4);
+		$numLeading = (int)$params->def('num_leading_downloads', 1);
+		$numIntro = (int)$params->def('num_intro_downloads', 4);
 
 		JPluginHelper::importPlugin('bfdownloadmanager');
 
 		// Compute the download slugs and prepare introtext (runs bfdownloadmanager plugins).
 		foreach ($items as &$item)
 		{
-			$item->slug        = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
-			$item->catslug     = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
+			$item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
+			$item->catslug = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
 			$item->parent_slug = $item->parent_alias ? ($item->parent_id . ':' . $item->parent_alias) : $item->parent_id;
 
 			// No link for ROOT category
@@ -87,7 +87,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 			}
 
 			$item->event = new stdClass;
-			$dispatcher  = JEventDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 
 			// Old plugins: Ensure that text property is available
 			if (!isset($item->text))
@@ -95,7 +95,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 				$item->text = $item->introtext;
 			}
 
-			$dispatcher->trigger('onBfdownloadmanagerPrepare', array ('com_bfdownloadmanager.featured', &$item, &$item->params, 0));
+			$dispatcher->trigger('onBfdownloadmanagerPrepare', array('com_bfdownloadmanager.featured', &$item, &$item->params, 0));
 
 			// Old plugins: Use processed text as introtext
 			$item->introtext = $item->text;
@@ -149,11 +149,11 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 		// Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
 
-		$this->params     = &$params;
-		$this->items      = &$items;
+		$this->params = &$params;
+		$this->items = &$items;
 		$this->pagination = &$pagination;
-		$this->user       = &$user;
-		$this->db         = JFactory::getDbo();
+		$this->user = &$user;
+		$this->db = JFactory::getDbo();
 
 		$this->_prepareDocument();
 
@@ -167,7 +167,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	 */
 	protected function _prepareDocument()
 	{
-		$app   = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$menus = $app->getMenu();
 		$title = null;
 
@@ -219,7 +219,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 		// Add feed links
 		if ($this->params->get('show_feed_link', 1))
 		{
-			$link    = '&format=feed&limitstart=';
+			$link = '&format=feed&limitstart=';
 			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
 			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');

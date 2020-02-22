@@ -47,7 +47,7 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
@@ -60,8 +60,8 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 			return parent::display($tpl);
 		}
 
-		$this->form  = $this->get('Form');
-		$this->item  = $this->get('Item');
+		$this->form = $this->get('Form');
+		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
 		$this->canDo = JHelperContent::getActions('com_bfdownloadmanager', 'download', $this->item->id);
 
@@ -100,9 +100,9 @@ class BfdownloadmanagerViewDownload extends JViewLegacy
 	protected function addToolbar()
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$user       = JFactory::getUser();
-		$userId     = $user->id;
-		$isNew      = ($this->item->id == 0);
+		$user = JFactory::getUser();
+		$userId = $user->id;
+		$isNew = ($this->item->id == 0);
 		$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
 
 		// Built the actions for new and existing records.

@@ -27,8 +27,8 @@ class BfdownloadmanagerController extends JControllerLegacy
 	/**
 	 * Method to display a view.
 	 *
-	 * @param   boolean  $cachable   If true, the view output will be cached
-	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 * @param boolean $cachable If true, the view output will be cached
+	 * @param array $urlparams An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return  BfdownloadmanagerController  This object to support chaining.
 	 *
@@ -36,9 +36,9 @@ class BfdownloadmanagerController extends JControllerLegacy
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
-		$view   = $this->input->get('view', 'downloads');
+		$view = $this->input->get('view', 'downloads');
 		$layout = $this->input->get('layout', 'downloads');
-		$id     = $this->input->getInt('id');
+		$id = $this->input->getInt('id');
 
 		// Check for edit form.
 		if ($view == 'download' && $layout == 'edit' && !$this->checkEditId('com_bfdownloadmanager.edit.download', $id))

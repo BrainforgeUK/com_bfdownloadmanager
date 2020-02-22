@@ -61,13 +61,13 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 	/**
 	 * Method to get download data.
 	 *
-	 * @param   integer  $itemId  The id of the download.
+	 * @param integer $itemId The id of the download.
 	 *
 	 * @return  mixed  Bfdownloadmanager item data object on success, false on failure.
 	 */
 	public function getItem($itemId = null)
 	{
-		$itemId = (int) (!empty($itemId)) ? $itemId : $this->getState('download.id');
+		$itemId = (int)(!empty($itemId)) ? $itemId : $this->getState('download.id');
 
 		// Get a row instance.
 		$table = $this->getTable();
@@ -90,9 +90,9 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 		$value->params = new Registry($value->attribs);
 
 		// Compute selected asset permissions.
-		$user   = JFactory::getUser();
+		$user = JFactory::getUser();
 		$userId = $user->get('id');
-		$asset  = 'com_bfdownloadmanager.download.' . $value->id;
+		$asset = 'com_bfdownloadmanager.download.' . $value->id;
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', $asset))
@@ -119,7 +119,7 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 		else
 		{
 			// New item.
-			$catId = (int) $this->getState('download.catid');
+			$catId = (int)$this->getState('download.catid');
 
 			if ($catId)
 			{
@@ -156,7 +156,7 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 	/**
 	 * Get the return URL.
 	 *
-	 * @return  string	The return URL.
+	 * @return  string    The return URL.
 	 *
 	 * @since   1.6
 	 */
@@ -168,7 +168,7 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array  $data  The form data.
+	 * @param array $data The form data.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -182,7 +182,7 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 		{
 			foreach ($associations as $tag => $associated)
 			{
-				$associations[$tag] = (int) $associated->id;
+				$associations[$tag] = (int)$associated->id;
 			}
 
 			$data['associations'] = $associations;
@@ -194,9 +194,9 @@ class BfdownloadmanagerModelForm extends BfdownloadmanagerModelDownload
 	/**
 	 * Allows preprocessing of the JForm object.
 	 *
-	 * @param   JForm   $form   The form object
-	 * @param   array   $data   The data to be merged into the form object
-	 * @param   string  $group  The plugin group to be executed
+	 * @param JForm $form The form object
+	 * @param array $data The data to be merged into the form object
+	 * @param string $group The plugin group to be executed
 	 *
 	 * @return  void
 	 *

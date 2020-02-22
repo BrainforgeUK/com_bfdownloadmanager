@@ -21,7 +21,7 @@ class BfdownloadmanagerControllerDownloads extends JControllerAdmin
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param array $config An optional associative array of configuration settings.
 	 *
 	 * @see     JControllerLegacy
 	 * @since   1.6
@@ -52,16 +52,16 @@ class BfdownloadmanagerControllerDownloads extends JControllerAdmin
 		// Check for request forgeries
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$user   = JFactory::getUser();
-		$ids    = $this->input->get('cid', array(), 'array');
+		$user = JFactory::getUser();
+		$ids = $this->input->get('cid', array(), 'array');
 		$values = array('featured' => 1, 'unfeatured' => 0);
-		$task   = $this->getTask();
-		$value  = ArrayHelper::getValue($values, $task, 0, 'int');
+		$task = $this->getTask();
+		$value = ArrayHelper::getValue($values, $task, 0, 'int');
 
 		// Access checks.
 		foreach ($ids as $i => $id)
 		{
-			if (!$user->authorise('core.edit.state', 'com_bfdownloadmanager.download.' . (int) $id))
+			if (!$user->authorise('core.edit.state', 'com_bfdownloadmanager.download.' . (int)$id))
 			{
 				// Prune items that you can't change.
 				unset($ids[$i]);
@@ -110,9 +110,9 @@ class BfdownloadmanagerControllerDownloads extends JControllerAdmin
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name    The model name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  The array of possible config values. Optional.
+	 * @param string $name The model name. Optional.
+	 * @param string $prefix The class prefix. Optional.
+	 * @param array $config The array of possible config values. Optional.
 	 *
 	 * @return  JModelLegacy
 	 *

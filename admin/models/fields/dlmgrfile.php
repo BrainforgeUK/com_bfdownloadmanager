@@ -39,11 +39,11 @@ class JFormFieldDlmgrfile extends JFormFieldFile
 	 */
 	protected function getLabel()
 	{
-    $required = $this->required;
-    $this->required = true;
-    $html = parent::getLabel();
-    $this->required = $required;
-    return $html;
+		$required = $this->required;
+		$this->required = true;
+		$html = parent::getLabel();
+		$this->required = $required;
+		return $html;
 	}
 
 	/**
@@ -55,13 +55,14 @@ class JFormFieldDlmgrfile extends JFormFieldFile
 	 */
 	protected function getInput()
 	{
-    $catid = $this->form->getData()->get('catid');
-    $suffix_list = BfdownloadmanagerHelper::getCategoryAttr($catid, 'download_suffix_list');
-    $suffix_list = BfdownloadmanagerHelper::suffixList2Array($suffix_list);
+		$catid = $this->form->getData()->get('catid');
+		$suffix_list = BfdownloadmanagerHelper::getCategoryAttr($catid, 'download_suffix_list');
+		$suffix_list = BfdownloadmanagerHelper::suffixList2Array($suffix_list);
 
-    if (!empty($suffix_list)) {
-      $this->accept = '.' . implode(',.', $suffix_list);
-    }
-    return parent::getInput();
+		if (!empty($suffix_list))
+		{
+			$this->accept = '.' . implode(',.', $suffix_list);
+		}
+		return parent::getInput();
 	}
 }

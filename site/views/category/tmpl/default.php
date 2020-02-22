@@ -15,17 +15,18 @@ JHtml::_('behavior.caption');
 ?>
 <div class="category-list<?php echo $this->pageclass_sfx; ?>">
 
-<?php
-switch($this->category->params->get('show_download_textarea')) {
-  case '1':
-    $this->subtemplatename = 'downloads';
-    break;
-  default:
-    $this->subtemplatename = 'simple_downloads';
-    break;
-}
+	<?php
+	switch ($this->category->params->get('show_download_textarea'))
+	{
+		case '1':
+			$this->subtemplatename = 'downloads';
+			break;
+		default:
+			$this->subtemplatename = 'simple_downloads';
+			break;
+	}
 
-echo JLayoutHelper::render('joomla.content.category_default', $this);
-?>
+	echo JLayoutHelper::render('joomla.content.category_default', $this);
+	?>
 
 </div>

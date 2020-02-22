@@ -23,7 +23,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param array $config An optional associative array of configuration settings.
 	 *
 	 * @see     JController
 	 * @since   1.6
@@ -68,8 +68,8 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
+	 * @param string $ordering An optional ordering field.
+	 * @param string $direction An optional direction (asc|desc).
 	 *
 	 * @return  void
 	 *
@@ -139,7 +139,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param string $id A prefix for the store id.
 	 *
 	 * @return  string  A store id.
 	 *
@@ -182,7 +182,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		$user = JFactory::getUser();
 
 		// Create a new query object.
-		$db    = $this->getDbo();
+		$db = $this->getDbo();
 		$query = $db->getQuery(true);
 
 		// Select the required fields from the table.
@@ -190,7 +190,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 			$this->getState(
 				'list.select',
 				'DISTINCT a.id, a.title, a.alias, a.introtext, a.fulltext, ' .
-        'a.downloadfile_name, a.downloadfile_size, ' .
+				'a.downloadfile_name, a.downloadfile_size, ' .
 				'a.checked_out, a.checked_out_time, ' .
 				'a.catid, a.created, a.created_by, a.created_by_alias, ' .
 				// Published/archived download in archive category is treats as archive download
@@ -208,7 +208,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		$query->from('#__bfdownloadmanager AS a');
 
-		$params      = $this->getState('params');
+		$params = $this->getState('params');
 		$orderby_sec = $params->get('orderby_sec');
 
 		// Join over the frontpage downloads if required.
@@ -254,7 +254,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		}
 
 		// Filter by access level.
-		if ($this->getState('filter.access', true))	
+		if ($this->getState('filter.access', true))
 		{
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 			$query->where('a.access IN (' . $groups . ')')
@@ -275,7 +275,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		elseif (is_numeric($published))
 		{
 			// Category has to be published
-			$query->where('c.published = 1 AND a.state = ' . (int) $published);
+			$query->where('c.published = 1 AND a.state = ' . (int)$published);
 		}
 		elseif (is_array($published))
 		{
@@ -311,13 +311,13 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		if (is_numeric($downloadId))
 		{
 			$type = $this->getState('filter.download_id.include', true) ? '= ' : '<> ';
-			$query->where('a.id ' . $type . (int) $downloadId);
+			$query->where('a.id ' . $type . (int)$downloadId);
 		}
 		elseif (is_array($downloadId))
 		{
 			$downloadId = ArrayHelper::toInteger($downloadId);
 			$downloadId = implode(',', $downloadId);
-			$type      = $this->getState('filter.download_id.include', true) ? 'IN' : 'NOT IN';
+			$type = $this->getState('filter.download_id.include', true) ? 'IN' : 'NOT IN';
 			$query->where('a.id ' . $type . ' (' . $downloadId . ')');
 		}
 
@@ -330,18 +330,18 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 			// Add subcategory check
 			$includeSubcategories = $this->getState('filter.subcategories', false);
-			$categoryEquals       = 'a.catid ' . $type . (int) $categoryId;
+			$categoryEquals = 'a.catid ' . $type . (int)$categoryId;
 
 			if ($includeSubcategories)
 			{
-				$levels = (int) $this->getState('filter.max_category_levels', '1');
+				$levels = (int)$this->getState('filter.max_category_levels', '1');
 
 				// Create a subquery for the subcategory list
 				$subQuery = $db->getQuery(true)
 					->select('sub.id')
 					->from('#__categories as sub')
 					->join('INNER', '#__categories as this ON sub.lft > this.lft AND sub.rgt < this.rgt')
-					->where('this.id = ' . (int) $categoryId);
+					->where('this.id = ' . (int)$categoryId);
 
 				if ($levels >= 0)
 				{
@@ -349,7 +349,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 				}
 
 				// Add the subquery to the main query
-				$query->where('(' . $categoryEquals . ' OR a.catid IN (' . (string) $subQuery . '))');
+				$query->where('(' . $categoryEquals . ' OR a.catid IN (' . (string)$subQuery . '))');
 			}
 			else
 			{
@@ -369,13 +369,13 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		}
 
 		// Filter by author
-		$authorId    = $this->getState('filter.author_id');
+		$authorId = $this->getState('filter.author_id');
 		$authorWhere = '';
 
 		if (is_numeric($authorId))
 		{
-			$type        = $this->getState('filter.author_id.include', true) ? '= ' : '<> ';
-			$authorWhere = 'a.created_by ' . $type . (int) $authorId;
+			$type = $this->getState('filter.author_id.include', true) ? '= ' : '<> ';
+			$authorWhere = 'a.created_by ' . $type . (int)$authorId;
 		}
 		elseif (is_array($authorId))
 		{
@@ -384,18 +384,18 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 			if ($authorId)
 			{
-				$type        = $this->getState('filter.author_id.include', true) ? 'IN' : 'NOT IN';
+				$type = $this->getState('filter.author_id.include', true) ? 'IN' : 'NOT IN';
 				$authorWhere = 'a.created_by ' . $type . ' (' . $authorId . ')';
 			}
 		}
 
 		// Filter by author alias
-		$authorAlias      = $this->getState('filter.author_alias');
+		$authorAlias = $this->getState('filter.author_alias');
 		$authorAliasWhere = '';
 
 		if (is_string($authorAlias))
 		{
-			$type             = $this->getState('filter.author_alias.include', true) ? '= ' : '<> ';
+			$type = $this->getState('filter.author_alias.include', true) ? '= ' : '<> ';
 			$authorAliasWhere = 'a.created_by_alias ' . $type . $db->quote($authorAlias);
 		}
 		elseif (is_array($authorAlias))
@@ -413,7 +413,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 				if ($authorAlias)
 				{
-					$type             = $this->getState('filter.author_alias.include', true) ? 'IN' : 'NOT IN';
+					$type = $this->getState('filter.author_alias.include', true) ? 'IN' : 'NOT IN';
 					$authorAliasWhere = 'a.created_by_alias ' . $type . ' (' . $authorAlias .
 						')';
 				}
@@ -436,7 +436,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		// Define null and now dates
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate  = $db->quote(JFactory::getDate()->toSql());
+		$nowDate = $db->quote(JFactory::getDate()->toSql());
 
 		// Filter by start and end dates.
 		if ((!$user->authorise('core.edit.state', 'com_bfdownloadmanager')) && (!$user->authorise('core.edit', 'com_bfdownloadmanager')))
@@ -447,13 +447,13 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		// Filter by Date Range or Relative Date
 		$dateFiltering = $this->getState('filter.date_filtering', 'off');
-		$dateField     = $this->getState('filter.date_field', 'a.created');
+		$dateField = $this->getState('filter.date_field', 'a.created');
 
 		switch ($dateFiltering)
 		{
 			case 'range':
 				$startDateRange = $db->quote($this->getState('filter.start_date_range', $nullDate));
-				$endDateRange   = $db->quote($this->getState('filter.end_date_range', $nullDate));
+				$endDateRange = $db->quote($this->getState('filter.end_date_range', $nullDate));
 				$query->where(
 					'(' . $dateField . ' >= ' . $startDateRange . ' AND ' . $dateField .
 					' <= ' . $endDateRange . ')'
@@ -461,7 +461,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 				break;
 
 			case 'relative':
-				$relativeDate = (int) $this->getState('filter.relative_date', 0);
+				$relativeDate = (int)$this->getState('filter.relative_date', 0);
 				$query->where(
 					$dateField . ' >= DATE_SUB(' . $nowDate . ', INTERVAL ' .
 					$relativeDate . ' DAY)'
@@ -477,9 +477,9 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		if (is_object($params) && ($params->get('filter_field') !== 'hide') && ($filter = $this->getState('list.filter')))
 		{
 			// Clean filter variable
-			$filter     = StringHelper::strtolower($filter);
-			$hitsFilter = (int) $filter;
-			$filter     = $db->quote('%' . $db->escape($filter, true) . '%', false);
+			$filter = StringHelper::strtolower($filter);
+			$hitsFilter = (int)$filter;
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%', false);
 
 			switch ($params->get('filter_field'))
 			{
@@ -510,13 +510,13 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 		// Filter by a single or group of tags.
 		$hasTag = false;
-		$tagId  = $this->getState('filter.tag');
+		$tagId = $this->getState('filter.tag');
 
 		if (!empty($tagId) && is_numeric($tagId))
 		{
 			$hasTag = true;
 
-			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId);
+			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int)$tagId);
 		}
 		elseif (is_array($tagId))
 		{
@@ -556,12 +556,12 @@ class BfdownloadmanagerModelDownloads extends JModelList
 	 */
 	public function getItems()
 	{
-		$items  = parent::getItems();
-		$user   = JFactory::getUser();
+		$items = parent::getItems();
+		$user = JFactory::getUser();
 		$userId = $user->get('id');
-		$guest  = $user->get('guest');
+		$guest = $user->get('guest');
 		$groups = $user->getAuthorisedViewLevels();
-		$input  = JFactory::getApplication()->input;
+		$input = JFactory::getApplication()->input;
 
 		// Get the global params
 		$globalParams = JComponentHelper::getParams('com_bfdownloadmanager', true);
@@ -573,7 +573,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 
 			// Unpack readmore and layout params
 			$item->alternative_readmore = $downloadParams->get('alternative_readmore');
-			$item->layout               = $downloadParams->get('layout');
+			$item->layout = $downloadParams->get('layout');
 
 			$item->params = clone $this->getState('params');
 
@@ -587,7 +587,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 			{
 				// Create an array of just the params set to 'use_download'
 				$menuParamsArray = $this->getState('params')->toArray();
-				$downloadArray    = array();
+				$downloadArray = array();
 
 				foreach ($menuParamsArray as $key => $value)
 				{

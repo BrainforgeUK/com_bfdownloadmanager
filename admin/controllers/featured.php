@@ -31,12 +31,12 @@ class BfdownloadmanagerControllerFeatured extends BfdownloadmanagerControllerDow
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		$user = JFactory::getUser();
-		$ids  = $this->input->get('cid', array(), 'array');
+		$ids = $this->input->get('cid', array(), 'array');
 
 		// Access checks.
 		foreach ($ids as $i => $id)
 		{
-			if (!$user->authorise('core.delete', 'com_bfdownloadmanager.download.' . (int) $id))
+			if (!$user->authorise('core.delete', 'com_bfdownloadmanager.download.' . (int)$id))
 			{
 				// Prune items that you can't delete.
 				unset($ids[$i]);
@@ -81,9 +81,9 @@ class BfdownloadmanagerControllerFeatured extends BfdownloadmanagerControllerDow
 	/**
 	 * Method to get a model object, loading it if required.
 	 *
-	 * @param   string  $name    The model name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
+	 * @param string $name The model name. Optional.
+	 * @param string $prefix The class prefix. Optional.
+	 * @param array $config Configuration array for model. Optional.
 	 *
 	 * @return  JModelLegacy  The model.
 	 *

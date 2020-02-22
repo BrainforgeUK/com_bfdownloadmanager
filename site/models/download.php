@@ -30,9 +30,9 @@ class BfdownloadmanagerModelDownload extends JModelItem
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
+	 * @return void
 	 * @since   1.6
 	 *
-	 * @return void
 	 */
 	protected function populateState()
 	{
@@ -64,7 +64,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 	/**
 	 * Method to get download data.
 	 *
-	 * @param   integer  $pk  The id of the download.
+	 * @param integer $pk The id of the download.
 	 *
 	 * @return  object|boolean|JException  Menu item data object on success, boolean false or JException instance on error
 	 */
@@ -72,7 +72,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 	{
 		$user = JFactory::getUser();
 
-		$pk = (!empty($pk)) ? $pk : (int) $this->getState('download.id');
+		$pk = (!empty($pk)) ? $pk : (int)$this->getState('download.id');
 
 		if ($this->_item === null)
 		{
@@ -88,7 +88,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 					->select(
 						$this->getState(
 							'item.select', 'a.id, a.asset_id, a.title, a.alias, a.introtext, a.fulltext, ' .
-              'a.downloadfile_name, a.downloadfile_size, ' .
+							'a.downloadfile_name, a.downloadfile_size, ' .
 							'a.state, a.catid, a.created, a.created_by, a.created_by_alias, ' .
 							// Use created if modified is 0
 							'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
@@ -98,7 +98,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 						)
 					);
 				$query->from('#__bfdownloadmanager AS a')
-					->where('a.id = ' . (int) $pk);
+					->where('a.id = ' . (int)$pk);
 
 				// Join on category table.
 				$query->select('c.title AS category_title, c.alias AS category_alias, c.access AS category_access')
@@ -141,7 +141,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 
 				if (is_numeric($published))
 				{
-					$query->where('(a.state = ' . (int) $published . ' OR a.state =' . (int) $archived . ')');
+					$query->where('(a.state = ' . (int)$published . ' OR a.state =' . (int)$archived . ')');
 				}
 
 				$db->setQuery($query);
@@ -213,8 +213,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 				}
 
 				$this->_item[$pk] = $data;
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				if ($e->getCode() == 404)
 				{
@@ -237,32 +236,33 @@ class BfdownloadmanagerModelDownload extends JModelItem
 	 */
 	public function getItemWithDownloadfile($pk = null)
 	{
-    $item = $this->getItem($pk);
+		$item = $this->getItem($pk);
 
-    if (empty($item)) {
-      return $item;
-    }
+		if (empty($item))
+		{
+			return $item;
+		}
 
-    $pk = (int) $item->id;
-  	$db = $this->getDbo('a.downloadfile');
-  	$query = $db->getQuery(true)
-  		->select('a.downloadfile')
-  	  ->from('#__bfdownloadmanager AS a')
-  		->where('a.id = ' . $pk);
+		$pk = (int)$item->id;
+		$db = $this->getDbo('a.downloadfile');
+		$query = $db->getQuery(true)
+			->select('a.downloadfile')
+			->from('#__bfdownloadmanager AS a')
+			->where('a.id = ' . $pk);
 		$db->setQuery($query);
 		$item->downloadfile = $db->loadResult();
 		if (empty($item->downloadfile))
 		{
 			return JError::raiseError(404, JText::_('COM_BFDOWNLOADMANAGER_ERROR_DOWNLOAD_NOT_FOUND'));
 		}
-    $this->_item[$pk] = $item;
-    return $this->_item[$pk];
-  }
+		$this->_item[$pk] = $item;
+		return $this->_item[$pk];
+	}
 
 	/**
 	 * Increment the hit counter for the download.
 	 *
-	 * @param   integer  $pk  Optional primary key of the download to increment.
+	 * @param integer $pk Optional primary key of the download to increment.
 	 *
 	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 */
@@ -273,7 +273,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 
 		if ($hitcount)
 		{
-			$pk = (!empty($pk)) ? $pk : (int) $this->getState('download.id');
+			$pk = (!empty($pk)) ? $pk : (int)$this->getState('download.id');
 
 			$table = JTable::getInstance('Bfdownloadmanager', 'JTable');
 			$table->load($pk);
@@ -286,8 +286,8 @@ class BfdownloadmanagerModelDownload extends JModelItem
 	/**
 	 * Save user vote on download
 	 *
-	 * @param   integer  $pk    Joomla Download Id
-	 * @param   integer  $rate  Voting rate
+	 * @param integer $pk Joomla Download Id
+	 * @param integer $rate Voting rate
 	 *
 	 * @return  boolean          Return true on success
 	 */
@@ -298,13 +298,13 @@ class BfdownloadmanagerModelDownload extends JModelItem
 			$userIP = $_SERVER['REMOTE_ADDR'];
 
 			// Initialize variables.
-			$db    = $this->getDbo();
+			$db = $this->getDbo();
 			$query = $db->getQuery(true);
 
 			// Create the base select statement.
 			$query->select('*')
 				->from($db->quoteName('#__bfdownloadmanager_rating'))
-				->where($db->quoteName('bfdownloadmanager_id') . ' = ' . (int) $pk);
+				->where($db->quoteName('bfdownloadmanager_id') . ' = ' . (int)$pk);
 
 			// Set the query and load the result.
 			$db->setQuery($query);
@@ -313,8 +313,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 			try
 			{
 				$rating = $db->loadObject();
-			}
-			catch (RuntimeException $e)
+			} catch (RuntimeException $e)
 			{
 				JError::raiseWarning(500, $e->getMessage());
 
@@ -329,7 +328,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 				// Create the base insert statement.
 				$query->insert($db->quoteName('#__bfdownloadmanager_rating'))
 					->columns(array($db->quoteName('bfdownloadmanager_id'), $db->quoteName('lastip'), $db->quoteName('rating_sum'), $db->quoteName('rating_count')))
-					->values((int) $pk . ', ' . $db->quote($userIP) . ',' . (int) $rate . ', 1');
+					->values((int)$pk . ', ' . $db->quote($userIP) . ',' . (int)$rate . ', 1');
 
 				// Set the query and execute the insert.
 				$db->setQuery($query);
@@ -337,8 +336,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 				try
 				{
 					$db->execute();
-				}
-				catch (RuntimeException $e)
+				} catch (RuntimeException $e)
 				{
 					JError::raiseWarning(500, $e->getMessage());
 
@@ -354,9 +352,9 @@ class BfdownloadmanagerModelDownload extends JModelItem
 					// Create the base update statement.
 					$query->update($db->quoteName('#__bfdownloadmanager_rating'))
 						->set($db->quoteName('rating_count') . ' = rating_count + 1')
-						->set($db->quoteName('rating_sum') . ' = rating_sum + ' . (int) $rate)
+						->set($db->quoteName('rating_sum') . ' = rating_sum + ' . (int)$rate)
 						->set($db->quoteName('lastip') . ' = ' . $db->quote($userIP))
-						->where($db->quoteName('bfdownloadmanager_id') . ' = ' . (int) $pk);
+						->where($db->quoteName('bfdownloadmanager_id') . ' = ' . (int)$pk);
 
 					// Set the query and execute the update.
 					$db->setQuery($query);
@@ -364,8 +362,7 @@ class BfdownloadmanagerModelDownload extends JModelItem
 					try
 					{
 						$db->execute();
-					}
-					catch (RuntimeException $e)
+					} catch (RuntimeException $e)
 					{
 						JError::raiseWarning(500, $e->getMessage());
 

@@ -40,9 +40,9 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Batch copy items to a new category or current.
 	 *
-	 * @param   integer  $value     The new category.
-	 * @param   array    $pks       An array of row IDs.
-	 * @param   array    $contexts  An array of item contexts.
+	 * @param integer $value The new category.
+	 * @param array $pks An array of row IDs.
+	 * @param array $contexts An array of item contexts.
 	 *
 	 * @return  mixed  An array of new IDs on success, boolean false on failure.
 	 *
@@ -50,7 +50,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	 */
 	protected function batchCopy($value, $pks, $contexts)
 	{
-		$categoryId = (int) $value;
+		$categoryId = (int)$value;
 
 		$newIds = array();
 
@@ -153,7 +153,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param object $record A record object.
 	 *
 	 * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
 	 *
@@ -168,7 +168,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 				return false;
 			}
 
-			return JFactory::getUser()->authorise('core.delete', 'com_bfdownloadmanager.download.' . (int) $record->id);
+			return JFactory::getUser()->authorise('core.delete', 'com_bfdownloadmanager.download.' . (int)$record->id);
 		}
 
 		return false;
@@ -177,7 +177,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to test whether a record can have its state edited.
 	 *
-	 * @param   object  $record  A record object.
+	 * @param object $record A record object.
 	 *
 	 * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
 	 *
@@ -190,13 +190,13 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 		// Check for existing download.
 		if (!empty($record->id))
 		{
-			return $user->authorise('core.edit.state', 'com_bfdownloadmanager.download.' . (int) $record->id);
+			return $user->authorise('core.edit.state', 'com_bfdownloadmanager.download.' . (int)$record->id);
 		}
 
 		// New download, so check against the category.
 		if (!empty($record->catid))
 		{
-			return $user->authorise('core.edit.state', 'com_bfdownloadmanager.category.' . (int) $record->catid);
+			return $user->authorise('core.edit.state', 'com_bfdownloadmanager.category.' . (int)$record->catid);
 		}
 
 		// Default to component settings if neither download nor category known.
@@ -206,7 +206,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
-	 * @param   JTable  $table  A JTable object.
+	 * @param JTable $table A JTable object.
 	 *
 	 * @return  void
 	 *
@@ -215,7 +215,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	protected function prepareTable($table)
 	{
 		// Set the publish date to now
-		if ($table->state == 1 && (int) $table->publish_up == 0)
+		if ($table->state == 1 && (int)$table->publish_up == 0)
 		{
 			$table->publish_up = JFactory::getDate()->toSql();
 		}
@@ -231,16 +231,16 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 		// Reorder the downloads within the category so the new download is first
 		if (empty($table->id))
 		{
-			$table->reorder('catid = ' . (int) $table->catid . ' AND state >= 0');
+			$table->reorder('catid = ' . (int)$table->catid . ' AND state >= 0');
 		}
 	}
 
 	/**
 	 * Returns a Table object, always creating it.
 	 *
-	 * @param   string  $type    The table type to instantiate
-	 * @param   string  $prefix  A prefix for the table class name. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
+	 * @param string $type The table type to instantiate
+	 * @param string $prefix A prefix for the table class name. Optional.
+	 * @param array $config Configuration array for model. Optional.
 	 *
 	 * @return  JTable    A database object
 	 */
@@ -252,7 +252,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer  $pk  The id of the primary key.
+	 * @param integer $pk The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
 	 */
@@ -309,8 +309,8 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array    $data      Data for the form.
-	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param array $data Data for the form.
+	 * @param boolean $loadData True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return  JForm|boolean  A JForm object on success, false on failure
 	 *
@@ -355,7 +355,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 
 		// Check for existing download.
 		// Modify the form based on Edit State access controls.
-		if ($id != 0 && (!$user->authorise('core.edit.state', 'com_bfdownloadmanager.download.' . (int) $id))
+		if ($id != 0 && (!$user->authorise('core.edit.state', 'com_bfdownloadmanager.download.' . (int)$id))
 			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_bfdownloadmanager')))
 		{
 			// Disable fields for display.
@@ -406,7 +406,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$app  = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$data = $app->getUserState('com_bfdownloadmanager.edit.download.data', array());
 
 		if (empty($data))
@@ -416,7 +416,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			// Pre-select some filters (Status, Category, Language, Access) in edit form if those have been selected in Download Manager: Downloads
 			if ($this->getState('download.id') == 0)
 			{
-				$filters = (array) $app->getUserState('com_bfdownloadmanager.downloads.filter');
+				$filters = (array)$app->getUserState('com_bfdownloadmanager.downloads.filter');
 				$data->set(
 					'state',
 					$app->input->getInt(
@@ -446,9 +446,9 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   JForm   $form   The form to validate against.
-	 * @param   array   $data   The data to validate.
-	 * @param   string  $group  The name of the field group to validate.
+	 * @param JForm $form The form to validate against.
+	 * @param array $data The data to validate.
+	 * @param string $group The name of the field group to validate.
 	 *
 	 * @return  array|boolean  Array of filtered data if valid, false otherwise.
 	 *
@@ -472,39 +472,45 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			}
 		}
 
-    if (is_array($_FILES['jform']['name'])) {
-      foreach($_FILES['jform']['name'] as $id=>$fileName) {
-        switch ($id) {
-          case 'downloadfile':
-            if (!empty($_FILES['jform']['tmp_name']['downloadfile']) && @file_exists($_FILES['jform']['tmp_name']['downloadfile'])) {
-              $data['downloadfile_name'] = $fileName;
-              $file = $_FILES['jform']['tmp_name']['downloadfile'];
-              $data['downloadfile_size'] = filesize($file);
-              $data['downloadfile'] = base64_encode(file_get_contents($file));
-            }
-            else {
-          		$table = $this->getTable();
-              $data['downloadfile'] = $table->getItemFieldValue($data['downloadfile'], 'downloadfile');
-            }
-            break 2;
-          case 'com_fields':
-            // Array of file fields
-            // Use function onUserBeforeDataValidation($form, &$data) of field plugin event
-            break;
-          default:
-            break;
-        }          
-      }
-    }
+		if (is_array($_FILES['jform']['name']))
+		{
+			foreach ($_FILES['jform']['name'] as $id => $fileName)
+			{
+				switch ($id)
+				{
+					case 'downloadfile':
+						if (!empty($_FILES['jform']['tmp_name']['downloadfile']) && @file_exists($_FILES['jform']['tmp_name']['downloadfile']))
+						{
+							$data['downloadfile_name'] = $fileName;
+							$file = $_FILES['jform']['tmp_name']['downloadfile'];
+							$data['downloadfile_size'] = filesize($file);
+							$data['downloadfile'] = base64_encode(file_get_contents($file));
+						}
+						else
+						{
+							$table = $this->getTable();
+							$data['downloadfile'] = $table->getItemFieldValue($data['downloadfile'], 'downloadfile');
+						}
+						break 2;
+					case 'com_fields':
+						// Array of file fields
+						// Use function onUserBeforeDataValidation($form, &$data) of field plugin event
+						break;
+					default:
+						break;
+				}
+			}
+		}
 
-    $suffix_list = BfdownloadmanagerHelper::getCategoryAttr($data['catid'], 'download_suffix_list');
-    if (isset($data['downloadfile_name']) &&
-        !BfdownloadmanagerHelper::validateFilenameSuffix($data['downloadfile_name'], $suffix_list)) {
-      $data['downloadfile'] = null;
-      $data['downloadfile_size'] = null;
-      $data['downloadfile_name'] = null;
-    }
-        
+		$suffix_list = BfdownloadmanagerHelper::getCategoryAttr($data['catid'], 'download_suffix_list');
+		if (isset($data['downloadfile_name']) &&
+			!BfdownloadmanagerHelper::validateFilenameSuffix($data['downloadfile_name'], $suffix_list))
+		{
+			$data['downloadfile'] = null;
+			$data['downloadfile_size'] = null;
+			$data['downloadfile_name'] = null;
+		}
+
 		// Filter and validate the form data.
 		return parent::validate($form, $data, $group);
 	}
@@ -512,7 +518,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array  $data  The form data.
+	 * @param array $data The form data.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -520,7 +526,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	 */
 	public function save($data)
 	{
-		$input  = JFactory::getApplication()->input;
+		$input = JFactory::getApplication()->input;
 		$filter = JFilterInput::getInstance();
 
 		if (isset($data['metadata']) && isset($data['metadata']['author']))
@@ -537,13 +543,13 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 		{
 			$registry = new Registry($data['images']);
 
-			$data['images'] = (string) $registry;
+			$data['images'] = (string)$registry;
 		}
 
 		JLoader::register('CategoriesHelper', JPATH_ADMINISTRATOR . '/components/com_categories/helpers/categories.php');
 
 		// Cast catid to integer for comparison
-		$catid = (int) $data['catid'];
+		$catid = (int)$data['catid'];
 
 		// Check if New Category exists
 		if ($catid > 0)
@@ -588,7 +594,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 
 			$registry = new Registry($data['urls']);
 
-			$data['urls'] = (string) $registry;
+			$data['urls'] = (string)$registry;
 		}
 
 		// Alter the title for save as copy
@@ -615,7 +621,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 		}
 
 		// Automatic handling of alias for empty fields
-		if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
+		if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int)$data['id'] == 0))
 		{
 			if ($data['alias'] == null)
 			{
@@ -661,15 +667,15 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Method to toggle the featured setting of downloads.
 	 *
-	 * @param   array    $pks    The ids of the items to toggle.
-	 * @param   integer  $value  The value to toggle to.
+	 * @param array $pks The ids of the items to toggle.
+	 * @param integer $value The value to toggle to.
 	 *
 	 * @return  boolean  True on success.
 	 */
 	public function featured($pks, $value = 0)
 	{
 		// Sanitize the ids.
-		$pks = (array) $pks;
+		$pks = (array)$pks;
 		$pks = ArrayHelper::toInteger($pks);
 
 		if (empty($pks))
@@ -686,12 +692,12 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			$db = $this->getDbo();
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__bfdownloadmanager'))
-				->set('featured = ' . (int) $value)
+				->set('featured = ' . (int)$value)
 				->where('id IN (' . implode(',', $pks) . ')');
 			$db->setQuery($query);
 			$db->execute();
 
-			if ((int) $value == 0)
+			if ((int)$value == 0)
 			{
 				// Adjust the mapping table.
 				// Clear the existing features settings.
@@ -734,8 +740,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 					$db->execute();
 				}
 			}
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			$this->setError($e->getMessage());
 
@@ -752,7 +757,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
-	 * @param   object  $table  A record object.
+	 * @param object $table A record object.
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
 	 *
@@ -760,15 +765,15 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	 */
 	protected function getReorderConditions($table)
 	{
-		return array('catid = ' . (int) $table->catid);
+		return array('catid = ' . (int)$table->catid);
 	}
 
 	/**
 	 * Allows preprocessing of the JForm object.
 	 *
-	 * @param   JForm   $form   The form object
-	 * @param   array   $data   The data to be merged into the form object
-	 * @param   string  $group  The plugin group to be executed
+	 * @param JForm $form The form object
+	 * @param array $data The data to be merged into the form object
+	 * @param string $group The plugin group to be executed
 	 *
 	 * @return  void
 	 *
@@ -818,8 +823,8 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Custom clean the cache of com_bfdownloadmanager and content modules
 	 *
-	 * @param   string   $group      The cache group
-	 * @param   integer  $client_id  The ID of the client
+	 * @param string $group The cache group
+	 * @param integer $client_id The ID of the client
 	 *
 	 * @return  void
 	 *
@@ -863,7 +868,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 	/**
 	 * Delete #__bfdownloadmanager_frontpage items if the deleted downloads was featured
 	 *
-	 * @param   object  &$pks  The primary key related to the contents that was deleted.
+	 * @param object  &$pks The primary key related to the contents that was deleted.
 	 *
 	 * @return  boolean
 	 *

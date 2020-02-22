@@ -21,10 +21,10 @@ abstract class JHtmlIcon
 	/**
 	 * Method to generate a link to the create item page for the given category
 	 *
-	 * @param   object    $category  The category information
-	 * @param   Registry  $params    The item parameters
-	 * @param   array     $attribs   Optional attributes for the link
-	 * @param   boolean   $legacy    True to use legacy images, false to use icomoon based graphic
+	 * @param object $category The category information
+	 * @param Registry $params The item parameters
+	 * @param array $attribs Optional attributes for the link
+	 * @param boolean $legacy True to use legacy images, false to use icomoon based graphic
 	 *
 	 * @return  string  The HTML markup for the create item link
 	 */
@@ -56,10 +56,10 @@ abstract class JHtmlIcon
 	/**
 	 * Method to generate a link to the email item page for the given download
 	 *
-	 * @param   object    $download  The download information
-	 * @param   Registry  $params   The item parameters
-	 * @param   array     $attribs  Optional attributes for the link
-	 * @param   boolean   $legacy   True to use legacy images, false to use icomoon based graphic
+	 * @param object $download The download information
+	 * @param Registry $params The item parameters
+	 * @param array $attribs Optional attributes for the link
+	 * @param boolean $legacy True to use legacy images, false to use icomoon based graphic
 	 *
 	 * @return  string  The HTML markup for the email item link
 	 */
@@ -67,19 +67,19 @@ abstract class JHtmlIcon
 	{
 		JLoader::register('MailtoHelper', JPATH_SITE . '/components/com_mailto/helpers/mailto.php');
 
-		$uri      = JUri::getInstance();
-		$base     = $uri->toString(array('scheme', 'host', 'port'));
+		$uri = JUri::getInstance();
+		$base = $uri->toString(array('scheme', 'host', 'port'));
 		$template = JFactory::getApplication()->getTemplate();
-		$link     = $base . JRoute::_(BfdownloadmanagerHelperRoute::getDownloadRoute($download->slug, $download->catid, $download->language), false);
-		$url      = 'index.php?option=com_mailto&tmpl=component&template=' . $template . '&link=' . MailtoHelper::addLink($link);
+		$link = $base . JRoute::_(BfdownloadmanagerHelperRoute::getDownloadRoute($download->slug, $download->catid, $download->language), false);
+		$url = 'index.php?option=com_mailto&tmpl=component&template=' . $template . '&link=' . MailtoHelper::addLink($link);
 
 		$status = 'width=400,height=350,menubar=yes,resizable=yes';
 
 		$text = JLayoutHelper::render('joomla.content.icons.email', array('params' => $params, 'legacy' => $legacy));
 
-		$attribs['title']   = JText::_('JGLOBAL_EMAIL_TITLE');
+		$attribs['title'] = JText::_('JGLOBAL_EMAIL_TITLE');
 		$attribs['onclick'] = "window.open(this.href,'win2','" . $status . "'); return false;";
-		$attribs['rel']     = 'nofollow';
+		$attribs['rel'] = 'nofollow';
 
 		return JHtml::_('link', JRoute::_($url), $text, $attribs);
 	}
@@ -90,19 +90,19 @@ abstract class JHtmlIcon
 	 * This icon will not display in a popup window, nor if the download is trashed.
 	 * Edit access checks must be performed in the calling code.
 	 *
-	 * @param   object    $download  The download information
-	 * @param   Registry  $params   The item parameters
-	 * @param   array     $attribs  Optional attributes for the link
-	 * @param   boolean   $legacy   True to use legacy images, false to use icomoon based graphic
+	 * @param object $download The download information
+	 * @param Registry $params The item parameters
+	 * @param array $attribs Optional attributes for the link
+	 * @param boolean $legacy True to use legacy images, false to use icomoon based graphic
 	 *
-	 * @return  string	The HTML for the download edit icon.
+	 * @return  string    The HTML for the download edit icon.
 	 *
 	 * @since   1.6
 	 */
 	public static function edit($download, $params, $attribs = array(), $legacy = false)
 	{
 		$user = JFactory::getUser();
-		$uri  = JUri::getInstance();
+		$uri = JUri::getInstance();
 
 		// Ignore if in a popup window.
 		if ($params && $params->get('popup'))
@@ -123,8 +123,8 @@ abstract class JHtmlIcon
 			&& $download->checked_out != $user->get('id'))
 		{
 			$checkoutUser = JFactory::getUser($download->checked_out);
-			$date         = JHtml::_('date', $download->checked_out_time);
-			$tooltip      = JText::_('JLIB_HTML_CHECKED_OUT') . ' :: ' . JText::sprintf('COM_BFDOWNLOADMANAGER_CHECKED_OUT_BY', $checkoutUser->name)
+			$date = JHtml::_('date', $download->checked_out_time);
+			$tooltip = JText::_('JLIB_HTML_CHECKED_OUT') . ' :: ' . JText::sprintf('COM_BFDOWNLOADMANAGER_CHECKED_OUT_BY', $checkoutUser->name)
 				. ' <br /> ' . $date;
 
 			$text = JLayoutHelper::render('joomla.content.icons.edit_lock', array('tooltip' => $tooltip, 'legacy' => $legacy));
@@ -135,7 +135,7 @@ abstract class JHtmlIcon
 		}
 
 		$bfdownloadmanagerUrl = BfdownloadmanagerHelperRoute::getDownloadRoute($download->slug, $download->catid, $download->language);
-		$url        = $bfdownloadmanagerUrl . '&task=download.edit&a_id=' . $download->id . '&return=' . base64_encode($uri);
+		$url = $bfdownloadmanagerUrl . '&task=download.edit&a_id=' . $download->id . '&return=' . base64_encode($uri);
 
 		if ($download->state == 0)
 		{
@@ -146,7 +146,7 @@ abstract class JHtmlIcon
 			$overlib = JText::_('JPUBLISHED');
 		}
 
-		$date   = JHtml::_('date', $download->created);
+		$date = JHtml::_('date', $download->created);
 		$author = $download->created_by_alias ?: $download->author;
 
 		$overlib .= '&lt;br /&gt;';
@@ -156,7 +156,7 @@ abstract class JHtmlIcon
 
 		$text = JLayoutHelper::render('joomla.content.icons.edit', array('download' => $download, 'overlib' => $overlib, 'legacy' => $legacy));
 
-		$attribs['title']   = JText::_('JGLOBAL_EDIT_TITLE');
+		$attribs['title'] = JText::_('JGLOBAL_EDIT_TITLE');
 		$output = JHtml::_('link', JRoute::_($url), $text, $attribs);
 
 		return $output;
@@ -165,25 +165,25 @@ abstract class JHtmlIcon
 	/**
 	 * Method to generate a popup link to print an download
 	 *
-	 * @param   object    $download  The download information
-	 * @param   Registry  $params   The item parameters
-	 * @param   array     $attribs  Optional attributes for the link
-	 * @param   boolean   $legacy   True to use legacy images, false to use icomoon based graphic
+	 * @param object $download The download information
+	 * @param Registry $params The item parameters
+	 * @param array $attribs Optional attributes for the link
+	 * @param boolean $legacy True to use legacy images, false to use icomoon based graphic
 	 *
 	 * @return  string  The HTML markup for the popup link
 	 */
 	public static function print_popup($download, $params, $attribs = array(), $legacy = false)
 	{
-		$url  = BfdownloadmanagerHelperRoute::getDownloadRoute($download->slug, $download->catid, $download->language);
+		$url = BfdownloadmanagerHelperRoute::getDownloadRoute($download->slug, $download->catid, $download->language);
 		$url .= '&tmpl=component&print=1&layout=default';
 
 		$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no';
 
 		$text = JLayoutHelper::render('joomla.content.icons.print_popup', array('params' => $params, 'legacy' => $legacy));
 
-		$attribs['title']   = JText::sprintf('JGLOBAL_PRINT_TITLE', htmlspecialchars($download->title, ENT_QUOTES, 'UTF-8'));
+		$attribs['title'] = JText::sprintf('JGLOBAL_PRINT_TITLE', htmlspecialchars($download->title, ENT_QUOTES, 'UTF-8'));
 		$attribs['onclick'] = "window.open(this.href,'win2','" . $status . "'); return false;";
-		$attribs['rel']     = 'nofollow';
+		$attribs['rel'] = 'nofollow';
 
 		return JHtml::_('link', JRoute::_($url), $text, $attribs);
 	}
@@ -191,10 +191,10 @@ abstract class JHtmlIcon
 	/**
 	 * Method to generate a link to print an download
 	 *
-	 * @param   object    $download  Not used, @deprecated for 4.0
-	 * @param   Registry  $params   The item parameters
-	 * @param   array     $attribs  Not used, @deprecated for 4.0
-	 * @param   boolean   $legacy   True to use legacy images, false to use icomoon based graphic
+	 * @param object $download Not used, @deprecated for 4.0
+	 * @param Registry $params The item parameters
+	 * @param array $attribs Not used, @deprecated for 4.0
+	 * @param boolean $legacy True to use legacy images, false to use icomoon based graphic
 	 *
 	 * @return  string  The HTML markup for the popup link
 	 */

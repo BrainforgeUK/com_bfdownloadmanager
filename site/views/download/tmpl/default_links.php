@@ -15,14 +15,14 @@ $urls = json_decode($this->item->urls);
 // Create shortcuts to some parameters.
 $params = $this->item->params;
 if ($urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))) :
-?>
-<div class="bfdownloadmanager-links">
-	<ul class="nav nav-tabs nav-stacked">
-		<?php
+	?>
+    <div class="bfdownloadmanager-links">
+        <ul class="nav nav-tabs nav-stacked">
+			<?php
 			$urlarray = array(
-			array($urls->urla, $urls->urlatext, $urls->targeta, 'a'),
-			array($urls->urlb, $urls->urlbtext, $urls->targetb, 'b'),
-			array($urls->urlc, $urls->urlctext, $urls->targetc, 'c')
+				array($urls->urla, $urls->urlatext, $urls->targeta, 'a'),
+				array($urls->urlb, $urls->urlbtext, $urls->targetb, 'b'),
+				array($urls->urlc, $urls->urlctext, $urls->targetc, 'c')
 			);
 			foreach ($urlarray as $url) :
 				$link = $url[0];
@@ -30,7 +30,7 @@ if ($urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))
 				$target = $url[2];
 				$id = $url[3];
 
-				if ( ! $link) :
+				if (!$link) :
 					continue;
 				endif;
 
@@ -40,8 +40,8 @@ if ($urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))
 				// If no target is present, use the default
 				$target = $target ?: $params->get('target' . $id);
 				?>
-			<li class="bfdownloadmanager-links-<?php echo $id; ?>">
-				<?php
+                <li class="bfdownloadmanager-links-<?php echo $id; ?>">
+					<?php
 					// Compute the correct link
 
 					switch ($target)
@@ -71,9 +71,9 @@ if ($urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))
 								htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . ' </a>';
 							break;
 					}
-				?>
-				</li>
-		<?php endforeach; ?>
-	</ul>
-</div>
+					?>
+                </li>
+			<?php endforeach; ?>
+        </ul>
+    </div>
 <?php endif; ?>

@@ -35,19 +35,19 @@ class BfdownloadmanagerViewForm extends JViewLegacy
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
 	public function display($tpl = null)
 	{
 		$user = JFactory::getUser();
-		$app  = JFactory::getApplication();
+		$app = JFactory::getApplication();
 
 		// Get model data.
-		$this->state       = $this->get('State');
-		$this->item        = $this->get('Item');
-		$this->form        = $this->get('Form');
+		$this->state = $this->get('State');
+		$this->item = $this->get('Item');
+		$this->form = $this->get('Form');
 		$this->return_page = $this->get('ReturnPage');
 
 		if (empty($this->item->id))
@@ -103,7 +103,7 @@ class BfdownloadmanagerViewForm extends JViewLegacy
 
 		// Override global params with download specific params
 		$this->params->merge($this->item->params);
-		$this->user   = $user;
+		$this->user = $user;
 
 		// Propose current language as default when creating new download
 		if (empty($this->item->id) && JLanguageMultilang::isEnabled())
@@ -134,7 +134,7 @@ class BfdownloadmanagerViewForm extends JViewLegacy
 	 */
 	protected function _prepareDocument()
 	{
-		$app   = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$menus = $app->getMenu();
 		$title = null;
 

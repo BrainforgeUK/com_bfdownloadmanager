@@ -23,7 +23,7 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 	/**
 	 * Model context string.
 	 *
-	 * @var		string
+	 * @var        string
 	 */
 	public $_context = 'com_bfdownloadmanager.archive';
 
@@ -32,8 +32,8 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   The field to order on.
-	 * @param   string  $direction  The direction to order on.
+	 * @param string $ordering The field to order on.
+	 * @param string $direction The direction to order on.
 	 *
 	 * @return  void
 	 *
@@ -64,7 +64,7 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 		$this->setState('list.limit', $limit);
 
 		// Set the archive ordering
-		$downloadOrderby   = $params->get('orderby_sec', 'rdate');
+		$downloadOrderby = $params->get('orderby_sec', 'rdate');
 		$downloadOrderDate = $params->get('order_date');
 
 		// No category ordering
@@ -83,17 +83,17 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 	 */
 	protected function getListQuery()
 	{
-		$params           = $this->state->params;
-		$app              = JFactory::getApplication('site');
-		$catids           = ArrayHelper::toInteger($app->input->get('catid', array(), 'array'));
-		$catids           = array_values(array_diff($catids, array(0)));
+		$params = $this->state->params;
+		$app = JFactory::getApplication('site');
+		$catids = ArrayHelper::toInteger($app->input->get('catid', array(), 'array'));
+		$catids = array_values(array_diff($catids, array(0)));
 		$downloadOrderDate = $params->get('order_date');
 
 		// Create a new query object.
 		$query = parent::getListQuery();
 
-			// Add routing for archive
-			// Sqlsrv changes
+		// Add routing for archive
+		// Sqlsrv changes
 		$case_when = ' CASE WHEN ';
 		$case_when .= $query->charLength('a.alias', '!=', '0');
 		$case_when .= ' THEN ';
@@ -152,7 +152,7 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 			$params = $app->getParams();
 
 			// Get the pagination request variables
-			$limit      = $app->input->get('limit', $params->get('display_num', 20), 'uint');
+			$limit = $app->input->get('limit', $params->get('display_num', 20), 'uint');
 			$limitstart = $app->input->get('limitstart', 0, 'uint');
 
 			$query = $this->_buildQuery();
@@ -166,16 +166,16 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 	/**
 	 * JModelLegacy override to add alternating value for $odd
 	 *
-	 * @param   string   $query       The query.
-	 * @param   integer  $limitstart  Offset.
-	 * @param   integer  $limit       The number of records.
+	 * @param string $query The query.
+	 * @param integer $limitstart Offset.
+	 * @param integer $limit The number of records.
 	 *
 	 * @return  array  An array of results.
 	 *
-	 * @since   12.2
 	 * @throws  RuntimeException
+	 * @since   12.2
 	 */
-	protected function _getList($query, $limitstart=0, $limit=0)
+	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
 		$result = parent::_getList($query, $limitstart, $limit);
 
@@ -201,7 +201,7 @@ class BfdownloadmanagerModelArchive extends BfdownloadmanagerModelDownloads
 	{
 		$db = $this->getDbo();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate  = $db->quote(JFactory::getDate()->toSql());
+		$nowDate = $db->quote(JFactory::getDate()->toSql());
 
 		$query = $db->getQuery(true);
 		$years = $query->year($db->qn('created'));

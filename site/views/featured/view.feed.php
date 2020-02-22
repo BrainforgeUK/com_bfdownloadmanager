@@ -19,16 +19,16 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
 	public function display($tpl = null)
 	{
 		// Parameters
-		$app       = JFactory::getApplication();
-		$doc       = JFactory::getDocument();
-		$params    = $app->getParams();
+		$app = JFactory::getApplication();
+		$doc = JFactory::getDocument();
+		$params = $app->getParams();
 		$feedEmail = $app->get('feed_email', 'none');
 		$siteEmail = $app->get('mailfrom');
 		$doc->link = JRoute::_('index.php?option=com_bfdownloadmanager&view=featured');
@@ -36,7 +36,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 		// Get some data from the model
 		$app->input->set('limit', $app->get('feed_limit'));
 		$categories = JCategories::getInstance('Bfdownloadmanager');
-		$rows       = $this->get('Items');
+		$rows = $this->get('Items');
 
 		foreach ($rows as $row)
 		{
@@ -70,13 +70,13 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 			}
 
 			$description .= ($params->get('feed_summary', 0) ? $row->introtext . $row->fulltext : $row->introtext);
-			$author      = $row->created_by_alias ?: $row->author;
+			$author = $row->created_by_alias ?: $row->author;
 
 			// Load individual item creator class
-			$item           = new JFeedItem;
-			$item->title    = $title;
-			$item->link     = $link;
-			$item->date     = $row->publish_up;
+			$item = new JFeedItem;
+			$item->title = $title;
+			$item->link = $link;
+			$item->date = $row->publish_up;
 			$item->category = array();
 
 			// All featured downloads are categorized as "Featured"

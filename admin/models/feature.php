@@ -21,11 +21,11 @@ class BfdownloadmanagerModelFeature extends BfdownloadmanagerModelDownload
 	/**
 	 * Returns a Table object, always creating it.
 	 *
-	 * @param   string  $type    The table type to instantiate
-	 * @param   string  $prefix  A prefix for the table class name. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
+	 * @param string $type The table type to instantiate
+	 * @param string $prefix A prefix for the table class name. Optional.
+	 * @param array $config Configuration array for model. Optional.
 	 *
-	 * @return  JTable	A database object
+	 * @return  JTable    A database object
 	 *
 	 * @since   1.6
 	 */
@@ -37,7 +37,7 @@ class BfdownloadmanagerModelFeature extends BfdownloadmanagerModelDownload
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
-	 * @param   object  $table  A record object.
+	 * @param object $table A record object.
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
 	 *

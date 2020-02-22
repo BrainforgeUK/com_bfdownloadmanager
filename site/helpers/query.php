@@ -19,7 +19,7 @@ class BfdownloadmanagerHelperQuery
 	/**
 	 * Translate an order code to a field for primary category ordering.
 	 *
-	 * @param   string  $orderby  The ordering code.
+	 * @param string $orderby The ordering code.
 	 *
 	 * @return  string  The SQL field(s) to order by.
 	 *
@@ -52,8 +52,8 @@ class BfdownloadmanagerHelperQuery
 	/**
 	 * Translate an order code to a field for secondary category ordering.
 	 *
-	 * @param   string  $orderby    The ordering code.
-	 * @param   string  $orderDate  The ordering code for the date.
+	 * @param string $orderby The ordering code.
+	 * @param string $orderDate The ordering code for the date.
 	 *
 	 * @return  string  The SQL field(s) to order by.
 	 *
@@ -160,7 +160,7 @@ class BfdownloadmanagerHelperQuery
 	/**
 	 * Translate an order code to a field for primary category ordering.
 	 *
-	 * @param   string  $orderDate  The ordering code.
+	 * @param string $orderDate The ordering code.
 	 *
 	 * @return  string  The SQL field(s) to order by.
 	 *
@@ -196,7 +196,7 @@ class BfdownloadmanagerHelperQuery
 	/**
 	 * Get join information for the voting query.
 	 *
-	 * @param   \Joomla\Registry\Registry  $params  An options object for the download.
+	 * @param \Joomla\Registry\Registry $params An options object for the download.
 	 *
 	 * @return  array  A named array with "select" and "join" keys.
 	 *
@@ -234,8 +234,8 @@ class BfdownloadmanagerHelperQuery
 	 * across columns in the layout, the result is that the
 	 * desired download ordering is achieved down the columns.
 	 *
-	 * @param   array    &$downloads   Array of intro text downloads
-	 * @param   integer  $numColumns  Number of columns in the layout
+	 * @param array    &$downloads Array of intro text downloads
+	 * @param integer $numColumns Number of columns in the layout
 	 *
 	 * @return  array  Reordered array to achieve desired ordering down columns
 	 *
@@ -291,7 +291,7 @@ class BfdownloadmanagerHelperQuery
 			{
 				for ($row = 1; ($row <= $maxRows) && ($i < $count); $row++)
 				{
-					if ($index[$row][$col] != - 1)
+					if ($index[$row][$col] != -1)
 					{
 						$index[$row][$col] = $keys[$i];
 						$i++;

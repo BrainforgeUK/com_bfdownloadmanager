@@ -63,7 +63,7 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
@@ -73,10 +73,10 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 
 		// Prepare the data
 		// Get the metrics for the structural page layout.
-		$params     = $this->params;
+		$params = $this->params;
 		$numLeading = $params->def('num_leading_downloads', 1);
-		$numIntro   = $params->def('num_intro_downloads', 4);
-		$numLinks   = $params->def('num_links', 4);
+		$numIntro = $params->def('num_intro_downloads', 4);
+		$numLinks = $params->def('num_links', 4);
 		$this->vote = JPluginHelper::isEnabled('bfdownloadmanager', 'vote');
 
 		JPluginHelper::importPlugin('bfdownloadmanager');
@@ -95,7 +95,7 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 			}
 
 			$item->catslug = $item->category_alias ? ($item->catid . ':' . $item->category_alias) : $item->catid;
-			$item->event   = new stdClass;
+			$item->event = new stdClass;
 
 			$dispatcher = JEventDispatcher::getInstance();
 
@@ -105,7 +105,7 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 				$item->text = $item->introtext;
 			}
 
-			$dispatcher->trigger('onBfdownloadmanagerPrepare', array ('com_bfdownloadmanager.category', &$item, &$item->params, 0));
+			$dispatcher->trigger('onBfdownloadmanagerPrepare', array('com_bfdownloadmanager.category', &$item, &$item->params, 0));
 
 			// Old plugins: Use processed text as introtext
 			$item->introtext = $item->text;
@@ -122,13 +122,13 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 
 		// Check for layout override only if this is not the active menu item
 		// If it is the active menu item, then the view and category id will match
-		$app     = JFactory::getApplication();
-		$active  = $app->getMenu()->getActive();
-		$menus   = $app->getMenu();
+		$app = JFactory::getApplication();
+		$active = $app->getMenu()->getActive();
+		$menus = $app->getMenu();
 		$pathway = $app->getPathway();
-		$title   = null;
+		$title = null;
 
-		if ((!$active) || ((strpos($active->link, 'view=category') === false) || (strpos($active->link, '&id=' . (string) $this->category->id) === false)))
+		if ((!$active) || ((strpos($active->link, 'view=category') === false) || (strpos($active->link, '&id=' . (string)$this->category->id) === false)))
 		{
 			// Get the layout from the merged category params
 			if ($layout = $this->category->params->get('category_layout'))
@@ -200,7 +200,7 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 			$this->params->set('page_title', $title);
 		}
 
-		$id = (int) @$menu->query['id'];
+		$id = (int)@$menu->query['id'];
 
 		// Check for empty title and add site name if param is set
 		if (empty($title))
@@ -278,7 +278,7 @@ class BfdownloadmanagerViewCategory extends JViewCategory
 	{
 		parent::prepareDocument();
 		$menu = $this->menu;
-		$id = (int) @$menu->query['id'];
+		$id = (int)@$menu->query['id'];
 
 		if ($menu && ($menu->query['option'] !== 'com_bfdownloadmanager' || $menu->query['view'] === 'download' || $id != $this->category->id))
 		{

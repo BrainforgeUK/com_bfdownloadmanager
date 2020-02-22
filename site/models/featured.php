@@ -23,7 +23,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 	/**
 	 * Model context string.
 	 *
-	 * @var		string
+	 * @var        string
 	 */
 	public $_context = 'com_bfdownloadmanager.frontpage';
 
@@ -32,8 +32,8 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   The field to order on.
-	 * @param   string  $direction  The direction to order on.
+	 * @param string $ordering The field to order on.
+	 * @param string $direction The direction to order on.
 	 *
 	 * @return  void
 	 *
@@ -44,8 +44,8 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		parent::populateState($ordering, $direction);
 
 		$input = JFactory::getApplication()->input;
-		$user  = JFactory::getUser();
-		$app   = JFactory::getApplication('site');
+		$user = JFactory::getUser();
+		$app = JFactory::getApplication('site');
 
 		// List state information
 		$limitstart = $input->getUInt('limitstart', 0);
@@ -70,7 +70,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 
 		$this->setState('filter.frontpage', true);
 
-		if ((!$user->authorise('core.edit.state', 'com_bfdownloadmanager')) &&  (!$user->authorise('core.edit', 'com_bfdownloadmanager')))
+		if ((!$user->authorise('core.edit.state', 'com_bfdownloadmanager')) && (!$user->authorise('core.edit', 'com_bfdownloadmanager')))
 		{
 			// Filter on published for those who do not have edit or edit.state rights.
 			$this->setState('filter.published', 1);
@@ -97,12 +97,12 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 			$this->setState('filter.frontpage.categories', $featuredCategories);
 		}
 
-		$downloadOrderby   = $params->get('orderby_sec', 'rdate');
+		$downloadOrderby = $params->get('orderby_sec', 'rdate');
 		$downloadOrderDate = $params->get('order_date');
-		$categoryOrderby  = $params->def('orderby_pri', '');
+		$categoryOrderby = $params->def('orderby_pri', '');
 
 		$secondary = BfdownloadmanagerHelperQuery::orderbySecondary($downloadOrderby, $downloadOrderDate);
-		$primary   = BfdownloadmanagerHelperQuery::orderbyPrimary($categoryOrderby);
+		$primary = BfdownloadmanagerHelperQuery::orderbyPrimary($categoryOrderby);
 
 		$this->setState('list.ordering', $primary . $secondary . ', a.created DESC');
 		$this->setState('list.direction', '');
@@ -135,7 +135,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param string $id A prefix for the store id.
 	 *
 	 * @return  string  A store id.
 	 */

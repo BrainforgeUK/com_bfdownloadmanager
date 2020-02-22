@@ -26,7 +26,7 @@ class BfdownloadmanagerViewCategory extends JViewCategoryfeed
 	 * Method to reconcile non standard names from components to usage in this class.
 	 * Typically overriden in the component feed view class.
 	 *
-	 * @param   object  $item  The item for a feed, an element of the $items array.
+	 * @param object $item The item for a feed, an element of the $items array.
 	 *
 	 * @return  void
 	 *
@@ -35,8 +35,8 @@ class BfdownloadmanagerViewCategory extends JViewCategoryfeed
 	protected function reconcileNames($item)
 	{
 		// Get description, intro_image, author and date
-		$app               = JFactory::getApplication();
-		$params            = $app->getParams();
+		$app = JFactory::getApplication();
+		$params = $app->getParams();
 		$item->description = '';
 		$obj = json_decode($item->images);
 		$introImage = isset($obj->{'image_intro'}) ? $obj->{'image_intro'} : '';

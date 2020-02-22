@@ -23,7 +23,7 @@ abstract class JHtmlBfdownloadmanagerAdministrator
 	/**
 	 * Render the list of associated items
 	 *
-	 * @param   integer  $downloadid  The download item id
+	 * @param integer $downloadid The download item id
 	 *
 	 * @return  string  The language HTML
 	 *
@@ -39,7 +39,7 @@ abstract class JHtmlBfdownloadmanagerAdministrator
 		{
 			foreach ($associations as $tag => $associated)
 			{
-				$associations[$tag] = (int) $associated->id;
+				$associations[$tag] = (int)$associated->id;
 			}
 
 			// Get the associated menu items
@@ -61,8 +61,7 @@ abstract class JHtmlBfdownloadmanagerAdministrator
 			try
 			{
 				$items = $db->loadObjectList('id');
-			}
-			catch (RuntimeException $e)
+			} catch (RuntimeException $e)
 			{
 				throw new Exception($e->getMessage(), 500, $e);
 			}
@@ -71,8 +70,8 @@ abstract class JHtmlBfdownloadmanagerAdministrator
 			{
 				foreach ($items as &$item)
 				{
-					$text    = $item->lang_sef ? strtoupper($item->lang_sef) : 'XX';
-					$url     = JRoute::_('index.php?option=com_bfdownloadmanager&task=download.edit&id=' . (int) $item->id);
+					$text = $item->lang_sef ? strtoupper($item->lang_sef) : 'XX';
+					$url = JRoute::_('index.php?option=com_bfdownloadmanager&task=download.edit&id=' . (int)$item->id);
 
 					$tooltip = htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8') . '<br />' . JText::sprintf('JCATEGORY_SPRINTF', $item->category_title);
 					$classes = 'hasPopover label label-association label-' . $item->lang_sef;
@@ -94,9 +93,9 @@ abstract class JHtmlBfdownloadmanagerAdministrator
 	/**
 	 * Show the feature/unfeature links
 	 *
-	 * @param   integer  $value      The state value
-	 * @param   integer  $i          Row number
-	 * @param   boolean  $canChange  Is user allowed to change?
+	 * @param integer $value The state value
+	 * @param integer $i Row number
+	 * @param boolean $canChange Is user allowed to change?
 	 *
 	 * @return  string       HTML code
 	 */
@@ -109,8 +108,8 @@ abstract class JHtmlBfdownloadmanagerAdministrator
 			0 => array('unfeatured', 'downloads.featured', 'COM_BFDOWNLOADMANAGER_UNFEATURED', 'JGLOBAL_TOGGLE_FEATURED'),
 			1 => array('featured', 'downloads.unfeatured', 'COM_BFDOWNLOADMANAGER_FEATURED', 'JGLOBAL_TOGGLE_FEATURED'),
 		);
-		$state = ArrayHelper::getValue($states, (int) $value, $states[1]);
-		$icon  = $state[0];
+		$state = ArrayHelper::getValue($states, (int)$value, $states[1]);
+		$icon = $state[0];
 
 		if ($canChange)
 		{

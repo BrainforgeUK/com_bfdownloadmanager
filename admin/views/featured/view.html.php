@@ -68,7 +68,7 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
@@ -76,13 +76,13 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	{
 		BfdownloadmanagerHelper::addSubmenu('featured');
 
-		$this->items         = $this->get('Items');
-		$this->pagination    = $this->get('Pagination');
-		$this->state         = $this->get('State');
-		$this->authors       = $this->get('Authors');
-		$this->filterForm    = $this->get('FilterForm');
+		$this->items = $this->get('Items');
+		$this->pagination = $this->get('Pagination');
+		$this->state = $this->get('State');
+		$this->authors = $this->get('Authors');
+		$this->filterForm = $this->get('FilterForm');
 		$this->activeFilters = $this->get('ActiveFilters');
-		$this->vote          = JPluginHelper::isEnabled('content', 'vote');
+		$this->vote = JPluginHelper::isEnabled('content', 'vote');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -171,15 +171,15 @@ class BfdownloadmanagerViewFeatured extends JViewLegacy
 	protected function getSortFields()
 	{
 		return array(
-			'fp.ordering'    => JText::_('JGRID_HEADING_ORDERING'),
-			'a.state'        => JText::_('JSTATUS'),
-			'a.title'        => JText::_('JGLOBAL_TITLE'),
+			'fp.ordering' => JText::_('JGRID_HEADING_ORDERING'),
+			'a.state' => JText::_('JSTATUS'),
+			'a.title' => JText::_('JGLOBAL_TITLE'),
 			'category_title' => JText::_('JCATEGORY'),
-			'access_level'   => JText::_('JGRID_HEADING_ACCESS'),
-			'a.created_by'   => JText::_('JAUTHOR'),
-			'language'       => JText::_('JGRID_HEADING_LANGUAGE'),
-			'a.created'      => JText::_('JDATE'),
-			'a.id'           => JText::_('JGRID_HEADING_ID'),
+			'access_level' => JText::_('JGRID_HEADING_ACCESS'),
+			'a.created_by' => JText::_('JAUTHOR'),
+			'language' => JText::_('JGRID_HEADING_LANGUAGE'),
+			'a.created' => JText::_('JDATE'),
+			'a.id' => JText::_('JGRID_HEADING_ID'),
 		);
 	}
 }

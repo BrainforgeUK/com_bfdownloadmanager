@@ -21,13 +21,13 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Bfdownloadmanager Component router constructor
 	 *
-	 * @param   JApplicationCms  $app   The application object
-	 * @param   JMenu            $menu  The menu object to work with
+	 * @param JApplicationCms $app The application object
+	 * @param JMenu $menu The menu object to work with
 	 */
 	public function __construct($app = null, $menu = null)
 	{
 		$params = JComponentHelper::getParams('com_bfdownloadmanager');
-		$this->noIDs = (bool) $params->get('sef_ids');
+		$this->noIDs = (bool)$params->get('sef_ids');
 		$categories = new JComponentRouterViewconfiguration('categories');
 		$categories->setKey('id');
 		$this->registerView($categories);
@@ -62,8 +62,8 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Method to get the segment(s) for a category
 	 *
-	 * @param   string  $id     ID of the category to retrieve the segments for
-	 * @param   array   $query  The request that is built right now
+	 * @param string $id ID of the category to retrieve the segments for
+	 * @param array $query The request that is built right now
 	 *
 	 * @return  array|string  The segments of this item
 	 */
@@ -93,8 +93,8 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Method to get the segment(s) for a category
 	 *
-	 * @param   string  $id     ID of the category to retrieve the segments for
-	 * @param   array   $query  The request that is built right now
+	 * @param string $id ID of the category to retrieve the segments for
+	 * @param array $query The request that is built right now
 	 *
 	 * @return  array|string  The segments of this item
 	 */
@@ -106,8 +106,8 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Method to get the segment(s) for an download
 	 *
-	 * @param   string  $id     ID of the download to retrieve the segments for
-	 * @param   array   $query  The request that is built right now
+	 * @param string $id ID of the download to retrieve the segments for
+	 * @param array $query The request that is built right now
 	 *
 	 * @return  array|string  The segments of this item
 	 */
@@ -132,14 +132,14 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 			return array($void => $segment);
 		}
 
-		return array((int) $id => $id);
+		return array((int)$id => $id);
 	}
 
 	/**
 	 * Method to get the segment(s) for a form
 	 *
-	 * @param   string  $id     ID of the download form to retrieve the segments for
-	 * @param   array   $query  The request that is built right now
+	 * @param string $id ID of the download form to retrieve the segments for
+	 * @param array $query The request that is built right now
 	 *
 	 * @return  array|string  The segments of this item
 	 *
@@ -153,8 +153,8 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Method to get the id for a category
 	 *
-	 * @param   string  $segment  Segment to retrieve the ID for
-	 * @param   array   $query    The request that is parsed right now
+	 * @param string $segment Segment to retrieve the ID for
+	 * @param array $query The request that is parsed right now
 	 *
 	 * @return  mixed   The id of this item or false
 	 */
@@ -177,7 +177,7 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 					}
 					else
 					{
-						if ($child->id == (int) $segment)
+						if ($child->id == (int)$segment)
 						{
 							return $child->id;
 						}
@@ -192,8 +192,8 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Method to get the segment(s) for a category
 	 *
-	 * @param   string  $segment  Segment to retrieve the ID for
-	 * @param   array   $query    The request that is parsed right now
+	 * @param string $segment Segment to retrieve the ID for
+	 * @param array $query The request that is parsed right now
 	 *
 	 * @return  mixed   The id of this item or false
 	 */
@@ -205,8 +205,8 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 	/**
 	 * Method to get the segment(s) for an download
 	 *
-	 * @param   string  $segment  Segment of the download to retrieve the ID for
-	 * @param   array   $query    The request that is parsed right now
+	 * @param string $segment Segment of the download to retrieve the ID for
+	 * @param array $query The request that is parsed right now
 	 *
 	 * @return  mixed   The id of this item or false
 	 */
@@ -222,10 +222,10 @@ class BfdownloadmanagerRouter extends JComponentRouterView
 				->where('catid = ' . $dbquery->q($query['id']));
 			$db->setQuery($dbquery);
 
-			return (int) $db->loadResult();
+			return (int)$db->loadResult();
 		}
 
-		return (int) $segment;
+		return (int)$segment;
 	}
 }
 
@@ -235,7 +235,7 @@ class BfdownloadmanagerRouter extends JComponentRouterView
  * These functions are proxys for the new router interface
  * for old SEF extensions.
  *
- * @param   array  &$query  An array of URL arguments
+ * @param array  &$query An array of URL arguments
  *
  * @return  array  The URL arguments to use to assemble the subsequent URL.
  *
@@ -255,7 +255,7 @@ function bfdownloadmanagerBuildRoute(&$query)
  * This function is a proxy for the new router interface
  * for old SEF extensions.
  *
- * @param   array  $segments  The segments of the URL to parse.
+ * @param array $segments The segments of the URL to parse.
  *
  * @return  array  The URL attributes to be used by the application.
  *
