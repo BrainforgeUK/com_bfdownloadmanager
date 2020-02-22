@@ -174,12 +174,12 @@ class BfdownloadmanagerHelper extends JHelperContent
 			$section = $parts[1];
 		}
 
-		$join = $db->qn('#__bfdownloadmanager') . ' AS c ON ct.content_item_id=c.id';
+		$join = $db->qn('#__bfdownloadmanager') . ' AS c ON ct.bfdownloadmanager_item_id=c.id';
 		$state = 'state';
 
 		if ($section === 'category')
 		{
-			$join = $db->qn('#__categories') . ' AS c ON ct.content_item_id=c.id';
+			$join = $db->qn('#__categories') . ' AS c ON ct.bfdownloadmanager_item_id=c.id';
 			$state = 'published as state';
 		}
 

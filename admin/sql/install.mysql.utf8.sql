@@ -62,3 +62,22 @@ CREATE TABLE IF NOT EXISTS `#__bfdownloadmanager_rating` (
   `lastip` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`bfdownloadmanager_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE "#__bfdownloadmanager_tag_map" (
+  "type_alias" character varying(255) NOT NULL DEFAULT '',
+  "core_bfdownloadmanager_id" integer NOT NULL,
+  "bfdownloadmanager_item_id" integer NOT NULL,
+  "tag_id" integer NOT NULL,
+  "tag_date" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
+ CONSTRAINT "uc_ItemnameTagid" UNIQUE ("type_alias", "bfdownloadmanager_item_id", "tag_id")
+);
+
+CREATE INDEX "#__bfdownloadmanager_tag_map_idx_tag_type" ON "#__bfdownloadmanager_tag_map" ("tag_id", "type_alias");
+CREATE INDEX "#__bfdownloadmanager_tag_map_idx_date_id" ON "#__bfdownloadmanager_tag_map" ("tag_date", "tag_id");
+CREATE INDEX "#__bfdownloadmanager_tag_map_idx_tag" ON "#__bfdownloadmanager_tag_map" ("tag_id");
+CREATE INDEX "#__bfdownloadmanager_tag_map_idx_core_bfdownloadmanager_id" ON "#__bfdownloadmanager_tag_map" ("core_bfdownloadmanager_id");
+
+COMMENT ON COLUMN "#__bfdownloadmanager_tag_map"."core_bfdownloadmanager_id" IS 'PK from the core content table';
+COMMENT ON COLUMN "#__bfdownloadmanager_tag_map"."bfdownloadmanager_item_id" IS 'PK from the content type table';
+COMMENT ON COLUMN "#__bfdownloadmanager_tag_map"."tag_id" IS 'PK from the tag table';
+COMMENT ON COLUMN "#__bfdownloadmanager_tag_map"."tag_date" IS 'Date of most recent save for this tag-item';

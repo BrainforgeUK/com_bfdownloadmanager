@@ -726,7 +726,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 				// Clear the existing features settings.
 				$query = $db->getQuery(true)
 					->delete($db->quoteName('#__bfdownloadmanager_frontpage'))
-					->where('content_id IN (' . implode(',', $pks) . ')');
+					->where('bfdownloadmanager_id IN (' . implode(',', $pks) . ')');
 				$db->setQuery($query);
 				$db->execute();
 			}
@@ -734,9 +734,9 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 			{
 				// First, we find out which of our new featured downloads are already featured.
 				$query = $db->getQuery(true)
-					->select('f.content_id')
+					->select('f.bfdownloadmanager_id')
 					->from('#__bfdownloadmanager_frontpage AS f')
-					->where('content_id IN (' . implode(',', $pks) . ')');
+					->where('bfdownloadmanager_id IN (' . implode(',', $pks) . ')');
 				$db->setQuery($query);
 
 				$oldFeatured = $db->loadColumn();
@@ -754,7 +754,7 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 
 				if (count($tuples))
 				{
-					$columns = array('content_id', 'ordering');
+					$columns = array('bfdownloadmanager_id', 'ordering');
 					$query = $db->getQuery(true)
 						->insert($db->quoteName('#__bfdownloadmanager_frontpage'))
 						->columns($db->quoteName($columns))

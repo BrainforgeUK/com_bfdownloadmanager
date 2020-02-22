@@ -25,6 +25,6 @@ class BfdownloadmanagerTableFeatured extends JTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__bfdownloadmanager_frontpage', 'content_id', $db);
+		parent::__construct('#__bfdownloadmanager_frontpage', 'bfdownloadmanager_id', $db);
 	}
 }

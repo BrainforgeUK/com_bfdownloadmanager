@@ -93,7 +93,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 
 		// Join over the content table.
 		$query->select('fp.ordering')
-			->join('INNER', '#__bfdownloadmanager_frontpage AS fp ON fp.content_id = a.id');
+			->join('INNER', '#__bfdownloadmanager_frontpage AS fp ON fp.bfdownloadmanager_id = a.id');
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor')
@@ -116,7 +116,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 		{
 			$query->select('COALESCE(NULLIF(ROUND(v.rating_sum  / v.rating_count, 0), 0), 0) AS rating,
 							COALESCE(NULLIF(v.rating_count, 0), 0) as rating_count')
-				->join('LEFT', '#__bfdownloadmanager_rating AS v ON a.id = v.content_id');
+				->join('LEFT', '#__bfdownloadmanager_rating AS v ON a.id = v.bfdownloadmanager_id');
 		}
 
 		// Filter by access level.
@@ -221,7 +221,7 @@ class BfdownloadmanagerModelFeatured extends BfdownloadmanagerModelDownloads
 				->join(
 					'LEFT',
 					$db->quoteName('#__bfdownloadmanageritem_tag_map', 'tagmap')
-					. ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+					. ' ON ' . $db->quoteName('tagmap.bfdownloadmanager_item_id') . ' = ' . $db->quoteName('a.id')
 					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote('com_bfdownloadmanager.download')
 				);
 		}

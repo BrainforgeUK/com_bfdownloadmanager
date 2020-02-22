@@ -221,7 +221,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 			$assogroup .= ', v.rating_sum, v.rating_count';
 			$query->select('COALESCE(NULLIF(ROUND(v.rating_sum  / v.rating_count, 0), 0), 0) AS rating, 
 					COALESCE(NULLIF(v.rating_count, 0), 0) as rating_count')
-				->join('LEFT', '#__bfdownloadmanager_rating AS v ON a.id = v.content_id');
+				->join('LEFT', '#__bfdownloadmanager_rating AS v ON a.id = v.bfdownloadmanager_id');
 		}
 
 		// Join over the associations.
@@ -369,7 +369,7 @@ class BfdownloadmanagerModelDownloads extends JModelList
 		if ($hasTag)
 		{
 			$query->join('LEFT', $db->quoteName('#__bfdownloadmanageritem_tag_map', 'tagmap')
-				. ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+				. ' ON ' . $db->quoteName('tagmap.bfdownloadmanager_item_id') . ' = ' . $db->quoteName('a.id')
 				. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote('com_bfdownloadmanager.download')
 			);
 		}
