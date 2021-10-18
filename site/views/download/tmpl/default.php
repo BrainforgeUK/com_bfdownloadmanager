@@ -83,7 +83,10 @@ JHtml::_('behavior.caption');
 
 	<?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
 		<?php // Todo: for Joomla4 joomla.content.info_block.block can be changed to joomla.content.info_block ?>
-		<?php echo JLayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
+		<?php
+		JLoader::register('ContentHelperRoute', JPATH_ROOT . '/components/com_content/helpers/route.php');
+        echo JLayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'above'));
+        ?>
 	<?php endif; ?>
 
 	<?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>

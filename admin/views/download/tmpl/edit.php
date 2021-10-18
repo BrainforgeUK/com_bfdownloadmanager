@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_bfdownloadmanager
  *
- * @copyright   Copyright (C) 2018 Jonathan Brain. All rights reserved.
+ * @copyright   Copyright (C) 2018-2021 Jonathan Brain. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -102,16 +102,20 @@ $tmpl = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=comp
 						}
 						else
 						{ ?>
-                            <a href="<?php echo dirname(JUri::base()); ?>/component/bfdownloadmanager/download?layout=fetch&id=<?php echo $this->item->id; ?>">
-                <span id="downloadfilelink"
-                      title="<?php echo jText::_('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON_DESC'); ?>">
-                <?php echo $buttonmsg; ?>
-                </span>
+                            <a href="<?php echo dirname(JUri::base()); ?>/component/bfdownloadmanager/download?layout=fetch&id=<?php echo $this->item->id; ?>"
+                               target="_blank">
+                                <span id="downloadfilelink"
+                                      title="<?php echo jText::_('COM_BFDOWNLOADMANAGER_DOWNLOAD_BUTTON_DESC'); ?>">
+                                <?php echo $buttonmsg; ?> <span class="icon-new-tab"> </span>
+                                </span>
                             </a>
 						<?php }
 					} ?>
                     <hr/>
-					<?php if ($show_download_textarea) { ?>
+					<?php if (empty($this->item->id)) { ?>
+                        <input type="hidden" id="jform_downloadtext" name="jform[downloadtext]"/>
+						<?php echo jText::_('COM_BFDOWNLOADMANAGER_SHOW_DOWNLOADTEXTAREA_SAVEFIRST'); ?>
+					<?php } else if ($show_download_textarea) { ?>
 						<?php echo $this->form->getInput('downloadtext'); ?>
 					<?php } else { ?>
                         <input type="hidden" id="jform_downloadtext" name="jform[downloadtext]"/>

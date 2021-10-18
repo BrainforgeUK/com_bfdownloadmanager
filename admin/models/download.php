@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_bfdownloadmanager
  *
- * @copyright   Copyright (C) 2018-2020 Jonathan Brain. All rights reserved.
+ * @copyright   Copyright (C) 2018-2021 Jonathan Brain. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -668,9 +668,14 @@ class BfdownloadmanagerModelDownload extends JModelAdmin
 
 		if (parent::save($data))
 		{
+			if (empty($data['id']))
+			{
+				$data['id'] = $this->getState($this->getName() . '.id');
+			}
+
 			if (isset($data['featured']))
 			{
-				$this->featured($this->getState($this->getName() . '.id'), $data['featured']);
+				$this->featured($data['id'], $data['featured']);
 			}
 
 			if (!empty($downloadfiledata))
